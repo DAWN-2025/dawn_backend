@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "EVENT_TBL")
@@ -41,6 +43,10 @@ public class Event {
 
     @Column(name = "EVENT_CATEGORY_ENG")
     private String categoryEng;
+
+    @OneToMany(mappedBy = "event")
+    @Builder.Default
+    private List<Keyword> keywords = new ArrayList<>();
 
 
 
