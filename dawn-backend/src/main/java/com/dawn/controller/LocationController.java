@@ -32,6 +32,7 @@ public class LocationController {
     }
 
 
+    // 이름, 주소 기준 검색
     @GetMapping("/viewLocationBySearch")
     @Operation(summary = "장소 검색")
     public ResponseEntity<List<LocationResponse>> bySearch(@RequestParam String keyword) {
