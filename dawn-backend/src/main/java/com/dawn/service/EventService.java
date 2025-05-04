@@ -6,6 +6,7 @@ import com.dawn.service.dto.CreateEventRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class EventService {
     private final EventRepository eventRepository;
 
     public List<Event> getUpcomingEvents() {
-        LocalDateTime now = LocalDateTime.now();
-        return eventRepository.findByDateAfterOrderByDateAsc(now);
+        LocalDate today = LocalDate.now();
+        return eventRepository.recommendEventByDate(today);
     }
 
     public List<Event> getAllByDateDesc() {
@@ -25,9 +26,7 @@ public class EventService {
     }
 
     public List<Event> search(String keyword) {
-        return eventRepository.findByNameContainingIgnoreCaseOrNationContainingIgnoreCaseOrCategoryContainingIgnoreCase(
-                keyword, keyword, keyword
-        );
+        return eventRepository.searchEventByKeyword(keyword);
     }
 
     public Event getById(Long id) {
