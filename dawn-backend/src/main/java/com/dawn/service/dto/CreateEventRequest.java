@@ -19,4 +19,5 @@ public class CreateEventRequest {
     private String nameEng;
     private String nationEng;
     private String categoryEng;
+    private String eventStampImage;
 }

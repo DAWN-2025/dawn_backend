@@ -12,14 +12,18 @@ public class StampResponse {
     private Long seq;
     private Long locationSeq;
     private Long userSeq;
+    private Long eventSeq;
     private LocalDateTime statusTime;
+    private String stampImage;
 
     public static StampResponse from(Stamp stamp) {
         return StampResponse.builder()
                 .seq(stamp.getSeq())
                 .locationSeq(stamp.getLocation().getSeq())
                 .userSeq(stamp.getOwner().getSeq())
+                .eventSeq(stamp.getEvent().getSeq())
                 .statusTime(stamp.getStatusTime())
+                .stampImage(stamp.getStampImage())
                 .build();
     }
 }

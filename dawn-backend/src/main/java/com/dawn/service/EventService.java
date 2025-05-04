@@ -34,6 +34,10 @@ public class EventService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사건이 존재하지 않습니다. id=" + id));
     }
 
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll();
+    }
+
     //이건 필요 없을 듯
     public Event create(CreateEventRequest request) {
         Event event = Event.builder()
@@ -45,6 +49,7 @@ public class EventService {
                 .nationEng(request.getNationEng())
                 .categoryEng(request.getCategoryEng())
                 .info(request.getInfo())
+                .eventStampImage(request.getEventStampImage())
                 .build();
 
         return eventRepository.save(event);

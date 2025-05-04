@@ -48,8 +48,6 @@ public class Event {
     @Builder.Default
     private List<Keyword> keywords = new ArrayList<>();
 
-
-
-
-
+    @Column(name = "EVENT_STAMP_IMAGE")
+    private String eventStampImage;
 }

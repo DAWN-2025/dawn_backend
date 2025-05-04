@@ -42,7 +42,7 @@ public class EventController {
     }
 
     @GetMapping("/viewEventBySearch")
-    @Operation(summary = "사건 키워드 검색 (이름, 국가, 카테고리)")
+    @Operation(summary = "사건 키워드 검색 (ex. 이름, 국가, 카테고리)")
     public ResponseEntity<List<EventResponse>> search(@RequestParam String keyword) {
         List<EventResponse> responseList = eventService.search(keyword).stream()
                 .map(EventResponse::from)

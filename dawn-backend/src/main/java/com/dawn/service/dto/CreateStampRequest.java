@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateStampRequest {
     private Long locationSeq;
+    private Long eventSeq;
     private Long userSeq;
 }

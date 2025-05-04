@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -18,6 +20,7 @@ public class EventResponse {
     private String nationEng;
     private String categoryEng;
     private String info;
+    private String eventStampImage;
 
     public static EventResponse from(Event event) {
         return EventResponse.builder()
@@ -30,7 +33,14 @@ public class EventResponse {
                 .nationEng(event.getNationEng())
                 .categoryEng(event.getCategoryEng())
                 .info(event.getInfo())
+                .eventStampImage(event.getEventStampImage())
                 .build();
+    }
+
+    public static List<EventResponse> from(List<Event> events) {
+        return events.stream()
+                .map(EventResponse::from)
+                .collect(Collectors.toList());
     }
 }
 

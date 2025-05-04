@@ -26,6 +26,13 @@ public class Stamp {
     @JoinColumn(name = "STAMP_OWNER")
     private User owner;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STAMP_EVENT")
+    private Event event;
+
     @Column(name = "STAMP_STATUS")
     private LocalDateTime statusTime;
+
+    @Column(name = "STAMP_IMAGE")
+    private String stampImage;
 }
