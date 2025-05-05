@@ -16,8 +16,9 @@ public class VisitedResponse {
     private boolean edited;
     private int likes;
     private boolean myComment;
+    private boolean visited;
 
-    public static VisitedResponse from(Visited visited, String currentUserEmail) {
+    public static VisitedResponse from(Visited visited, String currentUserEmail, boolean visitedCertified) {
         return VisitedResponse.builder()
                 .id(visited.getSeq())
                 .userEmail(visited.getUser().getEmail())
@@ -26,6 +27,7 @@ public class VisitedResponse {
                 .edited(visited.isEdited())
                 .likes(visited.getLikes())
                 .myComment(visited.getUser().getEmail().equals(currentUserEmail))
+                .visited(visitedCertified)
                 .build();
     }
 }
