@@ -4,6 +4,7 @@ import com.dawn.domain.Event;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,12 +15,15 @@ public interface EventRepository extends JpaRepository<Event, Long> {
         nativeQuery = true) // 가장 최근에 있었던 사건 하나 추천 해주는 쿼리
     List<Event> recommendEventByDate(LocalDate today);
 
+
     List<Event> findAllByOrderByDateDesc();
 
-    @Query (value = "SELECT * FROM EVENT_TBL et " +
-            "WHERE et.EVENT_SEQ IN (" +
-            "  SELECT KEYWORD_EVENT FROM KEYWORD_TBL kt WHERE kt.KEYWORD LIKE CONCAT('%', :keyword, '%')" +
-            ")", nativeQuery = true) // 키워드로 이벤트명 검색
-    List<Event> searchEventByKeyword(String keyword);
-
+    @Query("""
+SELECT DISTINCT e
+FROM Event e
+JOIN e.keywords k
+WHERE (:keyword IS NOT NULL AND :keyword <> '')
+  AND LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
+""")
+    List<Event> searchEventByKeyword(@Param("keyword") String keyword);
 }
