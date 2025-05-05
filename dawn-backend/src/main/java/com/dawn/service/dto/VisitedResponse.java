@@ -17,6 +17,7 @@ public class VisitedResponse {
     private int likes;
     private boolean myComment;
     private boolean visited;
+    private boolean deleted;
 
     public static VisitedResponse from(Visited visited, String currentUserEmail, boolean visitedCertified) {
         return VisitedResponse.builder()
@@ -28,6 +29,7 @@ public class VisitedResponse {
                 .likes(visited.getLikes())
                 .myComment(visited.getUser().getEmail().equals(currentUserEmail))
                 .visited(visitedCertified)
+                .deleted(visited.isDeleted())
                 .build();
     }
 }
