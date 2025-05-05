@@ -3,7 +3,7 @@ package com.dawn.controller;
 
 import com.dawn.domain.Event;
 import com.dawn.service.EventService;
-import com.dawn.service.dto.EventDetailResponse;
+import com.dawn.service.dto.EventResponse;
 import com.dawn.service.dto.EventSummaryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,8 +53,8 @@ public class EventController {
 
     @GetMapping("/viewEventInfo")
     @Operation(summary = "사건 상세 조회")
-    public ResponseEntity<EventDetailResponse> detail(@RequestParam Long id) {
+    public ResponseEntity<EventResponse> detail(@RequestParam Long id) {
         Event event = eventService.getById(id);
-        return ResponseEntity.ok(EventDetailResponse.from(event));
+        return ResponseEntity.ok(EventResponse.from(event));
     }
 }
