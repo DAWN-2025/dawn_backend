@@ -25,4 +25,8 @@ public class LocationService {
         return locationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 장소가 존재하지 않습니다. id=" + id));
     }
+
+    public List<Location> getAllLocations() {
+        return locationRepository.findAll();
+    }
 }
