@@ -23,8 +23,17 @@ public class Event {
     @Column(name = "EVENT_NAME", nullable = false)
     private String name;
 
-    @Column(name = "EVENT_INFO")
-    private String info;
+    @Column(name = "EVENT_SHORT_INFO")
+    private String shortInfo;
+
+    @Column(name = "EVENT_BACKGROUND")
+    private String background;
+
+    @Column(name = "EVENT_PROGRESS")
+    private String progress;
+
+    @Column(name = "EVENT_MEANING")
+    private String meaning;
 
     @Column(name = "EVENT_DATE", nullable = false)
     private LocalDateTime date;
