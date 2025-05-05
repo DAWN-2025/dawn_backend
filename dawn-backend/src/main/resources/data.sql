@@ -1,20 +1,36 @@
 -- 🌟 Event 등록
 INSERT INTO EVENT_TBL (
-    EVENT_NAME, EVENT_INFO, EVENT_DATE, EVENT_NATION, EVENT_CATEGORY,
-    EVENT_NAME_ENG, EVENT_NATION_ENG, EVENT_CATEGORY_ENG
+    EVENT_NAME, EVENT_SHORT_INFO, EVENT_BACKGROUND, EVENT_PROGRESS, EVENT_MEANING,
+    EVENT_DATE, EVENT_NATION, EVENT_CATEGORY,
+    EVENT_NAME_ENG, EVENT_NATION_ENG, EVENT_CATEGORY_ENG,
+    EVENT_IMAGE, EVENT_STAMP_IMAGE
 ) VALUES (
-             '5.18 광주민주화운동', '1980년 5월 광주에서 벌어진 민주화 운동',
-             '1980-05-18 00:00:00', '대한민국', '민주화운동',
-             'Gwangju Uprising', 'Republic of Korea', 'Democratization Movement'
+             '5.18 광주민주화운동',
+             '1980년 5월 광주에서 벌어진 민주화 운동',
+             '박정희 정권 이후 전두환 정권의 출범 과정 속에서 발생한 시민 저항',
+             '계엄령 확대, 시민들의 시위, 군의 진압, 그리고 최종적인 항쟁 종료',
+             '대한민국 민주주의 발전에 결정적인 역할을 한 역사적 사건',
+             '1980-05-18 00:00:00',
+             '대한민국', '민주화운동',
+             'Gwangju Uprising', 'Republic of Korea', 'Democratization Movement',
+             'https://example.com/images/gwangju.jpg', 'https://example.com/images/stamp1.jpg'
          );
 
 INSERT INTO EVENT_TBL (
-    EVENT_NAME, EVENT_INFO, EVENT_DATE, EVENT_NATION, EVENT_CATEGORY,
-    EVENT_NAME_ENG, EVENT_NATION_ENG, EVENT_CATEGORY_ENG
+    EVENT_NAME, EVENT_SHORT_INFO, EVENT_BACKGROUND, EVENT_PROGRESS, EVENT_MEANING,
+    EVENT_DATE, EVENT_NATION, EVENT_CATEGORY,
+    EVENT_NAME_ENG, EVENT_NATION_ENG, EVENT_CATEGORY_ENG,
+    EVENT_IMAGE, EVENT_STAMP_IMAGE
 ) VALUES (
-             '광주학생항일운동', '1929년 광주에서 벌어진 항일 독립 운동',
-             '1980-11-03 00:00:00', '대한민국', '독립운동',
-             'Gwangju Student Independence Movement', 'Republic of Korea', 'Independence Movement'
+             '광주학생항일운동',
+             '1929년 광주에서 벌어진 항일 독립 운동',
+             '일제 강점기 조선인 학생들에 대한 차별에 저항한 사건',
+             '광주에서 시작된 시위가 전국적으로 확산됨',
+             '학생들이 중심이 되어 일제에 항거한 대표적인 독립운동',
+             '1929-11-03 00:00:00',
+             '대한민국', '독립운동',
+             'Gwangju Student Independence Movement', 'Republic of Korea', 'Independence Movement',
+             'https://example.com/images/independence.jpg', 'https://example.com/images/stamp2.jpg'
          );
 
 -- 📍 Location 등록
@@ -65,15 +81,9 @@ INSERT INTO LETTER_TBL (
 -- 🧭 Stamp 등록
 INSERT INTO STAMP_TBL (
     STAMP_LOCATION, STAMP_OWNER, STAMP_EVENT, STAMP_STATUS, STAMP_IMAGE
-) VALUES (
-             1, 1, 1, CURRENT_TIMESTAMP, 'image.jpg'
-         );
-
-INSERT INTO STAMP_TBL (
-    STAMP_LOCATION, STAMP_OWNER, STAMP_EVENT, STAMP_STATUS, STAMP_IMAGE
-) VALUES (
-             2, 1, 2, CURRENT_TIMESTAMP, 'image.jpg'
-         );
+) VALUES
+      (1, 1, 1, CURRENT_TIMESTAMP, 'image.jpg'),
+      (2, 1, 2, CURRENT_TIMESTAMP, 'image.jpg');
 
 -- 📌 Visited 등록
 INSERT INTO VISITED_TBL (
