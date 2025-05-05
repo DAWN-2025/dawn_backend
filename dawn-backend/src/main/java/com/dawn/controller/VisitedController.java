@@ -4,6 +4,7 @@ import com.dawn.service.VisitedService;
 import com.dawn.service.dto.CreateVisitedRequest;
 import com.dawn.service.dto.VisitedResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class VisitedController {
     @Operation(summary = "방문 댓글 작성")
     public void writeComment(
             @RequestParam Long locationId,
-            @RequestBody CreateVisitedRequest request,
+            @Valid @RequestBody CreateVisitedRequest request,
 //            @RequestAttribute String uid // 인증 필터 구현후
             @RequestParam String uid // 임시 테스트
 
@@ -40,7 +41,7 @@ public class VisitedController {
     }
 
     @PatchMapping("/{id}")
-    @Operation(summary = "댓글 수정")
+    @Valid @Operation(summary = "댓글 수정")
     public void editComment(
             @PathVariable Long id,
             @RequestBody CreateVisitedRequest request
