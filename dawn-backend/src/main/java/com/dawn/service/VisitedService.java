@@ -7,8 +7,10 @@ import com.dawn.repository.LocationRepository;
 import com.dawn.repository.UserRepository;
 import com.dawn.repository.VisitedRepository;
 import com.dawn.service.dto.CreateVisitedRequest;
+import com.dawn.service.dto.VisitedResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,50 +20,59 @@ import java.util.List;
 public class VisitedService {
 
     private final VisitedRepository visitedRepository;
-    private final UserRepository userRepository;
     private final LocationRepository locationRepository;
+    private final UserRepository userRepository;
 
-    public Visited create(CreateVisitedRequest request) {
-        User user = userRepository.findById(request.getUserSeq())
-                .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
-        Location location = locationRepository.findById(request.getLocationSeq())
-                .orElseThrow(() -> new IllegalArgumentException("장소가 존재하지 않습니다."));
+    @Transactional
+    public void writeComment(Long locationId, String userUid, CreateVisitedRequest request) {
+        Location location = locationRepository.findById(locationId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 장소입니다."));
+        User user = userRepository.findByUid(userUid)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         Visited visited = Visited.builder()
-                .user(user)
                 .location(location)
+                .user(user)
                 .comment(request.getComment())
-                .visitedDate(LocalDateTime.now())
+                .imageUrl(request.getImageUrl())
                 .likes(0)
+                .createdAt(LocalDateTime.now())
+                .edited(false)
+                .deleted(false)
                 .build();
 
-        return visitedRepository.save(visited);
+        visitedRepository.save(visited);
     }
 
-    public List<Visited> getByLocation(Long locationSeq) {
-        Location location = locationRepository.findById(locationSeq)
-                .orElseThrow(() -> new IllegalArgumentException("장소가 존재하지 않습니다."));
-        return visitedRepository.findByLocation(location);
+    @Transactional(readOnly = true)
+    public List<VisitedResponse> getComments(Long locationId, String currentUserUid) {
+        Location location = locationRepository.findById(locationId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 장소입니다."));
+
+        return visitedRepository.findByLocationAndDeletedFalseOrderByCreatedAtDesc(location)
+                .stream()
+                .map(v -> VisitedResponse.from(v, currentUserUid))
+                .toList();
     }
 
-    public List<Visited> getByUser(Long userSeq) {
-        User user = userRepository.findById(userSeq)
-                .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
-        return visitedRepository.findByUser(user);
+    @Transactional
+    public void editComment(Long id, String newComment) {
+        Visited visited = visitedRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
+        visited.editComment(newComment);
     }
 
-    public boolean hasVisited(Long userSeq, Long locationSeq) {
-        User user = userRepository.findById(userSeq)
-                .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
-        Location location = locationRepository.findById(locationSeq)
-                .orElseThrow(() -> new IllegalArgumentException("장소가 존재하지 않습니다."));
-        return visitedRepository.existsByUserAndLocation(user, location);
+    @Transactional
+    public void deleteComment(Long id) {
+        Visited visited = visitedRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
+        visited.delete();
     }
 
-    public Visited like(Long visitedSeq) {
-        Visited visited = visitedRepository.findById(visitedSeq)
-                .orElseThrow(() -> new IllegalArgumentException("방문 기록이 존재하지 않습니다."));
+    @Transactional
+    public void likeComment(Long id) {
+        Visited visited = visitedRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
         visited.increaseLikes();
-        return visitedRepository.save(visited);
     }
 }
