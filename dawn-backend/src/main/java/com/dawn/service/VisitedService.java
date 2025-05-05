@@ -4,6 +4,7 @@ import com.dawn.domain.Location;
 import com.dawn.domain.User;
 import com.dawn.domain.Visited;
 import com.dawn.repository.LocationRepository;
+import com.dawn.repository.StampRepository;
 import com.dawn.repository.UserRepository;
 import com.dawn.repository.VisitedRepository;
 import com.dawn.service.dto.CreateVisitedRequest;
@@ -22,6 +23,7 @@ public class VisitedService {
     private final VisitedRepository visitedRepository;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
+    private final StampRepository stampRepository;
 
     @Transactional
     public void writeComment(Long locationId, String userUid, CreateVisitedRequest request) {
@@ -51,10 +53,12 @@ public class VisitedService {
 
         return visitedRepository.findByLocationAndDeletedFalseOrderByCreatedAtDesc(location)
                 .stream()
-                .map(v -> VisitedResponse.from(v, currentUserUid))
+                .map(v -> {
+                    boolean visitedCertified = stampRepository.existsByOwnerAndLocation(v.getUser(), location);
+                    return VisitedResponse.from(v, currentUserUid, visitedCertified);
+                })
                 .toList();
     }
-
     @Transactional
     public void editComment(Long id, String newComment) {
         Visited visited = visitedRepository.findById(id)
