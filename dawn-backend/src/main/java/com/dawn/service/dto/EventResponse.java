@@ -13,27 +13,38 @@ import java.util.stream.Collectors;
 public class EventResponse {
     private Long id;
     private String name;
-    private LocalDateTime occurDate;
+    private String shortInfo;
+    private String background;
+    private String progress;
+    private String meaning;
+    private LocalDateTime date;
     private String nation;
     private String category;
     private String nameEng;
     private String nationEng;
     private String categoryEng;
-    private String info;
-    private String eventStampImage;
+    private String image;
+    private List<KeywordSummaryResponse> keywords;
+
 
     public static EventResponse from(Event event) {
         return EventResponse.builder()
                 .id(event.getSeq())
                 .name(event.getName())
-                .occurDate(event.getDate())
+                .shortInfo(event.getShortInfo())
+                .background(event.getBackground())
+                .progress(event.getProgress())
+                .meaning(event.getMeaning())
+                .date(event.getDate())
                 .nation(event.getNation())
                 .category(event.getCategory())
                 .nameEng(event.getNameEng())
                 .nationEng(event.getNationEng())
                 .categoryEng(event.getCategoryEng())
-                .info(event.getInfo())
-                .eventStampImage(event.getEventStampImage())
+                .image(event.getEventImage())
+                .keywords(event.getKeywords().stream()
+                        .map(KeywordSummaryResponse::from)
+                        .toList())
                 .build();
     }
 
