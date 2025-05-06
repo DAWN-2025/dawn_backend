@@ -1,9 +1,14 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+
+    url: jdbc:mysql://localhost:3306/dawn?serverTimezone=Asia/Seoul&useSSL=false
+    username: root
+    password: qkfka1396
+    driver-class-name: com.mysql.cj.jdbc.Driver
     h2:
       console:
         enabled: true
