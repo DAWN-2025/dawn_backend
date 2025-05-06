@@ -43,5 +43,8 @@ public class UserService {
     }
 
 
-
+    public User createUser(String uid, String email) {
+        return userRepository.findByUid(uid)
+                .orElseGet(() -> userRepository.save(new User(uid, email)));
+    }
 }

@@ -23,4 +23,8 @@ public class User {
     @Column(name = "USER_UID", nullable = false, unique = true)
     private String uid; //Firebase 인증 UID
 
+    public User(String uid, String email) {
+        this.uid = uid;
+        this.email = email;
+    }
 }
