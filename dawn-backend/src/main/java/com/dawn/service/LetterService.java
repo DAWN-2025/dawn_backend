@@ -39,10 +39,10 @@ public class LetterService {
         return letterRepository.save(letter);
     }
 
-    public List<Letter> getByLocation(Long locationSeq) {
+    public List<Letter> getByLocation(Long locationSeq, Long userSeq) {
         Location location = locationRepository.findById(locationSeq)
                 .orElseThrow(() -> new IllegalArgumentException("장소가 존재하지 않습니다."));
-        return letterRepository.findByLocation(location);
+        return letterRepository.findByLocationAndUser(locationSeq, userSeq);
     }
 
     public List<Letter> getByUser(Long userSeq) {
