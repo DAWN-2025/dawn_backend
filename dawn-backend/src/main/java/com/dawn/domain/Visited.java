@@ -26,16 +26,38 @@ public class Visited {
     @JoinColumn(name = "VISITED_LOCATION", nullable = false)
     private Location location;
 
-    @Column(name = "VISITED_DATE", nullable = false)
-    private LocalDateTime visitedDate;
-
-    @Column(name = "VISITED_COMMENT", length = 1000)
+    @Column(name = "VISITED_COMMENT", length = 1000, nullable = false)
     private String comment;
 
     @Column(name = "VISITED_LIKES", nullable = false)
     private int likes;
 
+    @Column(name = "VISITED_CREATED_AT", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "VISITED_UPDATED_AT")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "VISITED_IS_EDITED", nullable = false)
+    private boolean edited;
+
+    @Column(name = "VISITED_IS_DELETED", nullable = false)
+    private boolean deleted;
+
+    @Column(name = "VISITED_IMAGE")
+    private String imageUrl;
+
     public void increaseLikes() {
-        this.likes += 1;
+        this.likes++;
+    }
+
+    public void editComment(String newComment) {
+        this.comment = newComment;
+        this.edited = true;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void delete() {
+        this.deleted = true;
     }
 }

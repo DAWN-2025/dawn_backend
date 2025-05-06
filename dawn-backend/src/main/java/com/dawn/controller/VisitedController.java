@@ -1,60 +1,63 @@
 package com.dawn.controller;
 
-import com.dawn.domain.Visited;
 import com.dawn.service.VisitedService;
 import com.dawn.service.dto.CreateVisitedRequest;
 import com.dawn.service.dto.VisitedResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/visited")
 @RequiredArgsConstructor
-@Tag(name = "Visited", description = "방문 기록 및 방명록 API")
+@RequestMapping("/visited")
 public class VisitedController {
 
     private final VisitedService visitedService;
 
-    @PostMapping("/create")
-    @Operation(summary ="방문자 기록, 방명록 생성" , description = "방문자를 기록하고 방명록을 생성한다.")
-    public ResponseEntity<VisitedResponse> create(@RequestBody CreateVisitedRequest request) {
-        Visited visited = visitedService.create(request);
-        return ResponseEntity.ok(VisitedResponse.from(visited));
+    @PostMapping
+    @Operation(summary = "방문 댓글 작성")
+    public void writeComment(
+            @RequestParam Long locationId,
+            @Valid @RequestBody CreateVisitedRequest request,
+//            @RequestAttribute String uid // 인증 필터 구현후
+            @RequestParam String uid // 임시 테스트
+
+    ) {
+        visitedService.writeComment(locationId, uid, request);
     }
 
-    @GetMapping("/byLocation")
-    @Operation(summary = "장소 기준 방문자 리스트", description = "특정 장소에 방문한 방문자 리스트를 반환한다.")
-    public ResponseEntity<List<VisitedResponse>> byLocation(@RequestParam Long locationSeq) {
-        List<VisitedResponse> result = visitedService.getByLocation(locationSeq).stream()
-                .map(VisitedResponse::from)
-                .toList();
-        return ResponseEntity.ok(result);
+    @GetMapping
+    @Operation(summary = "방명록 댓글 목록 조회")
+    public List<VisitedResponse> getComments(
+            @RequestParam Long locationId,
+//            @RequestAttribute String uid,
+            @RequestParam String uid
+
+    ) {
+        return visitedService.getComments(locationId, uid);
     }
 
-    @GetMapping("/byUser")
-    @Operation(summary = "사용자의 방문 기록을 조회한다", description = "유저별 방문 기록을 조회한다.")
-    public ResponseEntity<List<VisitedResponse>> byUser(@RequestParam Long userSeq) {
-        List<VisitedResponse> result = visitedService.getByUser(userSeq).stream()
-                .map(VisitedResponse::from)
-                .toList();
-        return ResponseEntity.ok(result);
+    @PatchMapping("/{id}")
+    @Valid @Operation(summary = "댓글 수정")
+    public void editComment(
+            @PathVariable Long id,
+            @RequestBody CreateVisitedRequest request
+    ) {
+        visitedService.editComment(id, request.getComment());
     }
 
-    @GetMapping("/check")
-    @Operation(summary = "방문 여부 확인", description = "유저가 특정 장소를 방문했는지 확인한다.")
-    public ResponseEntity<Boolean> checkVisited(@RequestParam Long userSeq, @RequestParam Long locationSeq) {
-        return ResponseEntity.ok(visitedService.hasVisited(userSeq, locationSeq));
+    @DeleteMapping("/{id}")
+    @Operation(summary = "댓글 삭제 (소프트 삭제)")
+    public void deleteComment(@PathVariable Long id) {
+        visitedService.deleteComment(id);
     }
 
-    @PostMapping("/like")
-    @Operation(summary = "좋아요 수를 늘린다", description = "방명록에 작성된 글의 좋아요 수를 늘린다.")
-    public ResponseEntity<VisitedResponse> like(@RequestParam Long visitedSeq) {
-        Visited liked = visitedService.like(visitedSeq);
-        return ResponseEntity.ok(VisitedResponse.from(liked));
+    @PostMapping("/{id}/like")
+    @Operation(summary = "댓글 좋아요")
+    public void likeComment(@PathVariable Long id) {
+        visitedService.likeComment(id);
     }
 }

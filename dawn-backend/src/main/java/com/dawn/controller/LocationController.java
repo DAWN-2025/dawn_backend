@@ -3,6 +3,7 @@ package com.dawn.controller;
 import com.dawn.domain.Location;
 import com.dawn.service.LocationService;
 import com.dawn.service.dto.LocationResponse;
+import com.dawn.service.dto.LocationSummaryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,9 @@ public class LocationController {
 
     @GetMapping("/viewLocationByEvnet")
     @Operation(summary = "사건 기준으로 장소 조회")
-    public ResponseEntity<List<LocationResponse>> byEvent(@RequestParam Long eventId) {
-        List<LocationResponse> responses = locationService.getLocationsByEvent(eventId)
-                .stream().map(LocationResponse::from).toList();
+    public ResponseEntity<List<LocationSummaryResponse>> byEvent(@RequestParam Long eventId) {
+        List<LocationSummaryResponse> responses = locationService.getLocationsByEvent(eventId)
+                .stream().map(LocationSummaryResponse::from).toList();
 
         return ResponseEntity.ok(responses);
     }
@@ -35,9 +36,9 @@ public class LocationController {
     // 이름, 주소 기준 검색
     @GetMapping("/viewLocationBySearch")
     @Operation(summary = "장소 검색")
-    public ResponseEntity<List<LocationResponse>> bySearch(@RequestParam String keyword) {
-        List<LocationResponse> responses = locationService.searchLocations(keyword)
-                .stream().map(LocationResponse::from).toList();
+    public ResponseEntity<List<LocationSummaryResponse>> bySearch(@RequestParam String keyword) {
+        List<LocationSummaryResponse> responses = locationService.searchLocations(keyword)
+                .stream().map(LocationSummaryResponse::from).toList();
 
         return ResponseEntity.ok(responses);
     }
@@ -48,6 +49,18 @@ public class LocationController {
         Location loc = locationService.getById(id);
         return ResponseEntity.ok(LocationResponse.from(loc));
     }
+
+    @GetMapping("/list")
+    @Operation(summary = "등록된 장소 리스트 조회")
+    public ResponseEntity<List<LocationSummaryResponse>> viewList() {
+        List<LocationSummaryResponse> responses = locationService.getAllLocations()
+                .stream()
+                .map(LocationSummaryResponse::from)
+                .toList();
+        return ResponseEntity.ok(responses);
+
+    }
+
 
 
 }

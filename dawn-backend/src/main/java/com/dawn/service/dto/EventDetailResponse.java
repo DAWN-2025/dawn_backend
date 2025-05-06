@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Builder
-public class EventResponse {
+public class EventDetailResponse {
     private Long id;
     private String name;
     private String shortInfo;
@@ -27,8 +27,8 @@ public class EventResponse {
     private List<KeywordSummaryResponse> keywords;
 
 
-    public static EventResponse from(Event event) {
-        return EventResponse.builder()
+    public static EventDetailResponse from(Event event) {
+        return EventDetailResponse.builder()
                 .id(event.getSeq())
                 .name(event.getName())
                 .shortInfo(event.getShortInfo())
@@ -48,9 +48,9 @@ public class EventResponse {
                 .build();
     }
 
-    public static List<EventResponse> from(List<Event> events) {
+    public static List<EventDetailResponse> from(List<Event> events) {
         return events.stream()
-                .map(EventResponse::from)
+                .map(EventDetailResponse::from)
                 .collect(Collectors.toList());
     }
 }
