@@ -1,11 +1,8 @@
 package com.dawn.repository;
 
 import com.dawn.domain.Event;
-<<<<<<< HEAD
 import com.dawn.service.dto.EventStampResponse;
 import lombok.extern.slf4j.Slf4j;
-=======
->>>>>>> 024dfb2656d825812ff4287229c40bffb973b0b6
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
