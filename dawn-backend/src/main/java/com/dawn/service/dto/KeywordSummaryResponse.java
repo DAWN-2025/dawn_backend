@@ -8,10 +8,12 @@ import lombok.Getter;
 @Builder
 public class KeywordSummaryResponse {
     private String keyword;
+    private String keywordEng;
 
     public static KeywordSummaryResponse from(Keyword k) {
         return KeywordSummaryResponse.builder()
                 .keyword(k.getKeyword())
+                .keywordEng(k.getKeywordEng())
                 .build();
     }
 }

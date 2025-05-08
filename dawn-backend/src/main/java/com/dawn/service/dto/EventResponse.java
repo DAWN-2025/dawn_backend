@@ -17,12 +17,14 @@ public class EventResponse {
     private String background;
     private String progress;
     private String meaning;
+    private String shortInfoEng;
+    private String backgroundEng;
+    private String progressEng;
+    private String meaningEng;
     private LocalDateTime date;
     private String nation;
-    private String category;
     private String nameEng;
     private String nationEng;
-    private String categoryEng;
     private String image;
     private List<KeywordSummaryResponse> keywords;
 
@@ -32,15 +34,17 @@ public class EventResponse {
                 .id(event.getSeq())
                 .name(event.getName())
                 .shortInfo(event.getShortInfo())
+                .shortInfoEng(event.getShortInfoEng())
                 .background(event.getBackground())
+                .backgroundEng(event.getBackgroundEng())
                 .progress(event.getProgress())
+                .progressEng(event.getProgressEng())
                 .meaning(event.getMeaning())
+                .meaningEng(event.getMeaningEng())
                 .date(event.getDate())
                 .nation(event.getNation())
-                .category(event.getCategory())
                 .nameEng(event.getNameEng())
                 .nationEng(event.getNationEng())
-                .categoryEng(event.getCategoryEng())
                 .image(event.getEventImage())
                 .keywords(event.getKeywords().stream()
                         .map(KeywordSummaryResponse::from)

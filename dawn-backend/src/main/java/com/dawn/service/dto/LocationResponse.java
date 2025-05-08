@@ -18,14 +18,18 @@ public class LocationResponse {
     private String shortInfo;
     private String historicInfo;
     private String etiquette;
+    private String event;
 
-    private LocalDateTime openTime;
-    private LocalDateTime closeTime;
+    private String openTime;
+    private String closeTime;
     private String phoneNum;
     private String exhibitionTime;
     private String available;
     private String translate;
 
+    private String shortInfoEng;
+    private String historicInfoEng;
+    private String etiquetteEng;
     private String nameEng;
     private String addressEng;
 
@@ -37,13 +41,17 @@ public class LocationResponse {
                 .name(loc.getName())
                 .address(loc.getAddress())
                 .image(loc.getImage())
+                .event(loc.getEvent().getName())
                 .shortInfo(loc.getShortInfo())
+                .shortInfoEng(loc.getShortInfoEng())
                 .historicInfo(loc.getHistoricInfo())
+                .historicInfoEng(loc.getHistoricInfoEng())
                 .etiquette(loc.getEtiquette())
+                .etiquetteEng(loc.getEtiquetteEng())
                 .openTime(loc.getOpenTime())
                 .closeTime(loc.getCloseTime())
                 .phoneNum(loc.getPhoneNum())
-                .exhibitionTime(loc.getExhibitionTIme())  // ← 엔티티에 오타 있어도 맞춰줘야 함
+                .exhibitionTime(loc.getExhibitionTime())
                 .available(loc.getAvailable())
                 .translate(loc.getTranslate())
                 .nameEng(loc.getNameEng())

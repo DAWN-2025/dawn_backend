@@ -19,6 +19,9 @@ public class Keyword {
     @Column(name = "KEYWORD", nullable = false)
     private String keyword;
 
+    @Column(name = "KEYWORD_ENG", nullable = false)
+    private String keywordEng;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "KEYWORD_EVENT")
     private Event event;
