@@ -24,6 +24,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     WHERE (:keyword IS NOT NULL AND :keyword <> '')
       AND (
         LOWER(e.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(e.nameEng) LIKE LOWER(CONCAT('%', :keyword, '%'))
         OR LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
         OR LOWER(k.keywordEng) LIKE LOWER(CONCAT('%', :keyword, '%'))
       )
