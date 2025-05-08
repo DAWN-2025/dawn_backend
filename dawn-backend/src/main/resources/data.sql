@@ -100,3 +100,12 @@ INSERT INTO VISITED_TBL (
              CURRENT_TIMESTAMP, NULL, false, false,
              'https://example.com/images/comment1.jpg'
          );
+
+
+-- 🚨 COMMENT_REPORT_TBL 등록
+INSERT INTO COMMENT_REPORT_TBL (
+    COMMENT_ID, REPORTER_ID, REASON, REPORTED_AT
+) VALUES
+      (1, 2, '부적절한 표현이 포함되어 있습니다.', NOW()),
+      (1, 3, '허위 사실이 포함된 댓글입니다.', NOW()),
+      (1, 4, '감정을 상하게 하는 내용입니다.', NOW());

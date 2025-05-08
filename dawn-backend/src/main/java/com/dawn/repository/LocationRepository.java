@@ -12,12 +12,18 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     List<Location> findByEventSeq(Long eventId);
 
 
-    //쿼리문 수정해야할듯
     @Query("""
     SELECT DISTINCT l
     FROM Location l
-    JOIN Keyword k ON k.location = l
+    LEFT JOIN l.keywords k
     WHERE (:keyword IS NOT NULL AND :keyword <> '')
-      AND LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
+      AND(
+        LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(k.keywordEng) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(l.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(l.nameEng) LIKE LOWER(CONCAT('%', :keyword, '%'))
+
+      )
     """)
-    List<Location> searchByKeyword(@Param("keyword") String keyword);}
+    List<Location> searchByKeyword(@Param("keyword") String keyword);
+}

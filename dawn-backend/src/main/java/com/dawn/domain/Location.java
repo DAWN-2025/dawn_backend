@@ -39,26 +39,33 @@ public class Location {
     private List<Keyword> keywords = new ArrayList<>();
 
 
-    @Column(name = "LOC_SHORT_INFO")
+    @Column(name = "LOC_SHORT_INFO", columnDefinition = "TEXT")
     private String shortInfo;
+    @Column(name = "LOC_SHORT_INFO_ENG", columnDefinition = "TEXT")
+    private String shortInfoEng;
 
-    @Column(name = "LOC_HISTORIC_INFO")
+
+    @Column(name = "LOC_HISTORIC_INFO", columnDefinition = "LONGTEXT")
     private String historicInfo;
+    @Column(name = "LOC_HISTORIC_INFO_ENG", columnDefinition = "LONGTEXT")
+    private String historicInfoEng;
 
-    @Column(name = "LOC_ETIQUETTE")
+    @Column(name = "LOC_ETIQUETTE", columnDefinition = "LONGTEXT")
     private String etiquette;
+    @Column(name = "LOC_ETIQUETTE_ENG", columnDefinition = "LONGTEXT")
+    private String etiquetteEng;
 
     @Column(name = "LOC_OPEN_TIME")
-    private LocalDateTime openTime;
+    private String openTime;
 
     @Column(name = "LOC_CLOSE_TIME")
-    private LocalDateTime closeTime;
+    private String closeTime;
 
     @Column(name = "LOC_PHONE_NUM")
     private String phoneNum;
 
     @Column(name = "EXHIBITION_TIME")
-    private String exhibitionTIme;
+    private String exhibitionTime;
 
     @Column(name = "AVAILABLE")
     private String available;

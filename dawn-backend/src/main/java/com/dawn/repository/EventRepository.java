@@ -1,8 +1,11 @@
 package com.dawn.repository;
 
 import com.dawn.domain.Event;
+<<<<<<< HEAD
 import com.dawn.service.dto.EventStampResponse;
 import lombok.extern.slf4j.Slf4j;
+=======
+>>>>>>> 024dfb2656d825812ff4287229c40bffb973b0b6
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,11 +23,16 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByOrderByDateDesc();
 
     @Query("""
-        SELECT DISTINCT e
-        FROM Event e
-        JOIN e.keywords k
-        WHERE (:keyword IS NOT NULL AND :keyword <> '')
-        AND LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
+    SELECT DISTINCT e
+    FROM Event e
+    LEFT JOIN e.keywords k
+    WHERE (:keyword IS NOT NULL AND :keyword <> '')
+      AND (
+        LOWER(e.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(e.nameEng) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(k.keywordEng) LIKE LOWER(CONCAT('%', :keyword, '%'))
+      )
 """)
     List<Event> searchEventByKeyword(@Param("keyword") String keyword);
 
