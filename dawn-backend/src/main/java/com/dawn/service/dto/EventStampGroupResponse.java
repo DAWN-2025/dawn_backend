@@ -10,12 +10,12 @@ import java.util.List;
 @Getter
 @Builder
 public class EventStampGroupResponse {
-    private EventResponse event;
+    private EventStampResponse event;
     private List<StampResponse> stamps;
 
     public static EventStampGroupResponse from(Event event, List<Stamp> stamps) {
         return EventStampGroupResponse.builder()
-                .event(EventResponse.from(event))
+                .event(EventStampResponse.from(event))
                 .stamps(stamps.stream().map(StampResponse::from).toList())
                 .build();
     }

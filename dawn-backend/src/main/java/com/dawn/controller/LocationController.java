@@ -23,7 +23,7 @@ public class LocationController {
 
     private final LocationService locationService;
 
-    @GetMapping("/viewLocationByEvnet")
+    @GetMapping("/viewLocationByEvent")
     @Operation(summary = "사건 기준으로 장소 조회")
     public ResponseEntity<List<LocationSummaryResponse>> byEvent(@RequestParam Long eventId) {
         List<LocationSummaryResponse> responses = locationService.getLocationsByEvent(eventId)

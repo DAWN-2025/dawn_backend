@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 public class StampResponse {
     private Long seq;
     private Long locationSeq;
+    private String locationName;
+    private String locationNameEng;
     private Long userSeq;
     private Long eventSeq;
     private LocalDateTime statusTime;
@@ -20,6 +22,8 @@ public class StampResponse {
         return StampResponse.builder()
                 .seq(stamp.getSeq())
                 .locationSeq(stamp.getLocation().getSeq())
+                .locationName(stamp.getLocation().getName())
+                .locationNameEng(stamp.getLocation().getNameEng())
                 .userSeq(stamp.getOwner().getSeq())
                 .eventSeq(stamp.getEvent().getSeq())
                 .statusTime(stamp.getStatusTime())

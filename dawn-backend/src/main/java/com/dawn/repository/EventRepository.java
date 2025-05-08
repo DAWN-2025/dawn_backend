@@ -1,6 +1,7 @@
 package com.dawn.repository;
 
 import com.dawn.domain.Event;
+import com.dawn.service.dto.EventStampResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,11 +20,15 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByOrderByDateDesc();
 
     @Query("""
-SELECT DISTINCT e
-FROM Event e
-JOIN e.keywords k
-WHERE (:keyword IS NOT NULL AND :keyword <> '')
-  AND LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.keywords k
+        WHERE (:keyword IS NOT NULL AND :keyword <> '')
+        AND LOWER(k.keyword) LIKE LOWER(CONCAT('%', :keyword, '%'))
 """)
     List<Event> searchEventByKeyword(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT et.EVENT_SEQ, et.EVENT_NAME, et.EVENT_NAME_ENG, et.EVENT_STAMP_IMAGE FROM EVENT_TBL et", nativeQuery = true)
+    List<EventStampResponse> getAllEventStampImg();
+
 }
