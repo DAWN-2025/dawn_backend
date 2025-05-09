@@ -106,28 +106,28 @@ public class DataInitializer implements CommandLineRunner {
                 .build());
 
         keywordRepository.saveAll(List.of(
-                Keyword.builder().keyword("민주주의").keywordEng("Democracy").event(event1).korEngFlag(1).build(),
-                Keyword.builder().keyword("광주").keywordEng("Gwangju").event(event1).korEngFlag(1).build(),
-                Keyword.builder().keyword("대한민국").keywordEng("Korea").event(event1).korEngFlag(1).build(),
-                Keyword.builder().keyword("시민 저항").keywordEng("Civil Resistance").event(event1).korEngFlag(1).build(),
-                Keyword.builder().keyword("신군부").keywordEng("Junta").event(event1).korEngFlag(1).build()
+                Keyword.builder().keyword("#민주주의").keywordEng("#Democracy").event(event1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#광주").keywordEng("#Gwangju").event(event1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#대한민국").keywordEng("#Korea").event(event1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#시민 저항").keywordEng("#Civil Resistance").event(event1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#신군부").keywordEng("#Junta").event(event1).korEngFlag(1).build()
         ));
 
         // 전남대 정문 관련 키워드
         keywordRepository.saveAll(List.of(
-                Keyword.builder().keyword("학생운동").keywordEng("Student Movement").location(loc2).korEngFlag(1).build(),
-                Keyword.builder().keyword("대한민국").keywordEng("Korea").location(loc2).korEngFlag(1).build(),
-                Keyword.builder().keyword("민주주의").keywordEng("Democracy").location(loc2).korEngFlag(1).build(),
-                Keyword.builder().keyword("1980년대").keywordEng("1980s").location(loc2).korEngFlag(1).build()
+                Keyword.builder().keyword("#학생운동").keywordEng("#Student Movement").location(loc2).korEngFlag(1).build(),
+                Keyword.builder().keyword("#대한민국").keywordEng("#Korea").location(loc2).korEngFlag(1).build(),
+                Keyword.builder().keyword("#민주주의").keywordEng("#Democracy").location(loc2).korEngFlag(1).build(),
+                Keyword.builder().keyword("#1980년대").keywordEng("#1980s").location(loc2).korEngFlag(1).build()
         ));
 
         // 전일빌딩 관련 키워드
         keywordRepository.saveAll(List.of(
-                Keyword.builder().keyword("추모공간").keywordEng("Memorial Space").location(loc1).korEngFlag(1).build(),
-                Keyword.builder().keyword("민주주의").keywordEng("Democracy").location(loc1).korEngFlag(1).build(),
-                Keyword.builder().keyword("국가폭력").keywordEng("State Violence").location(loc1).korEngFlag(1).build(),
-                Keyword.builder().keyword("시민항전").keywordEng("Civil Resistance").location(loc1).korEngFlag(1).build(),
-                Keyword.builder().keyword("1980년대").keywordEng("1980s").location(loc1).korEngFlag(1).build()
+                Keyword.builder().keyword("#추모공간").keywordEng("#Memorial Space").location(loc1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#민주주의").keywordEng("#Democracy").location(loc1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#국가폭력").keywordEng("#State Violence").location(loc1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#시민항전").keywordEng("#Civil Resistance").location(loc1).korEngFlag(1).build(),
+                Keyword.builder().keyword("#1980년대").keywordEng("#1980s").location(loc1).korEngFlag(1).build()
         ));
 
         Letter letter = letterRepository.save(Letter.builder()
