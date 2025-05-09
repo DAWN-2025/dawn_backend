@@ -19,6 +19,7 @@ public class LocationResponse {
     private String historicInfo;
     private String etiquette;
     private String event;
+    private Long eventId;
 
     private String openTime;
     private String closeTime;
@@ -42,6 +43,7 @@ public class LocationResponse {
                 .address(loc.getAddress())
                 .image(loc.getImage())
                 .event(loc.getEvent().getName())
+                .eventId(loc.getEvent().getSeq())
                 .shortInfo(loc.getShortInfo())
                 .shortInfoEng(loc.getShortInfoEng())
                 .historicInfo(loc.getHistoricInfo())
