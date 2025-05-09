@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -22,10 +23,11 @@ public class VisitedController {
     public void writeComment(
             @RequestParam Long locationId,
             @Valid @RequestBody CreateVisitedRequest request,
-//            @RequestAttribute String uid // 인증 필터 구현후
-            @RequestParam String uid // 임시 테스트
+            Authentication authentication
+//            @RequestParam String uid // 임시 테스트
 
     ) {
+        String uid = authentication.getName();
         visitedService.writeComment(locationId, uid, request);
     }
 
@@ -33,10 +35,11 @@ public class VisitedController {
     @Operation(summary = "방명록 댓글 목록 조회")
     public List<VisitedResponse> getComments(
             @RequestParam Long locationId,
-//            @RequestAttribute String uid,
-            @RequestParam String uid
+            Authentication authentication
+//            @RequestParam String uid // 테스트
 
     ) {
+        String uid = authentication.getName();
         return visitedService.getComments(locationId, uid);
     }
 
