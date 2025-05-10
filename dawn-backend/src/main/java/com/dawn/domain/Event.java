@@ -34,6 +34,7 @@ public class Event {
 
     @Column(name = "EVENT_MEANING", columnDefinition = "TEXT")
     private String meaning;
+
     @Column(name = "EVENT_SHORT_INFO_ENG", columnDefinition = "TEXT")
     private String shortInfoEng;
 

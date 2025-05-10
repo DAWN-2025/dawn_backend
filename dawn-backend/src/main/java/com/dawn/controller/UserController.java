@@ -35,6 +35,7 @@ public class UserController {
         // String name = decodedToken.getName();
 
         User user = userService.createUser(uid, email); // 서비스에서 uid, email로 유저 생성 또는 중복확인
+
         return ResponseEntity.ok(UserResponse.from(user));
     }
 
