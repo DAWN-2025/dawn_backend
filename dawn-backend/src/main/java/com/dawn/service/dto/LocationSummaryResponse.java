@@ -11,7 +11,7 @@ import java.util.List;
 public class LocationSummaryResponse {
     private Long id;
     private String name;
-    private String locationImage;
+    private String locationSimpleImage;
     private String address;
     private List<KeywordSummaryResponse> keywords;
 
@@ -19,7 +19,7 @@ public class LocationSummaryResponse {
         return LocationSummaryResponse.builder()
                 .id(location.getSeq())
                 .name(location.getName())
-                .locationImage(location.getImage())
+                .locationSimpleImage(location.getSimpleImage())
                 .address(location.getAddress())
                 .keywords(location.getKeywords().stream()
                         .map(KeywordSummaryResponse::from)
