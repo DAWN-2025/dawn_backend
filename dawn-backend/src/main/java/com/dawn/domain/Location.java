@@ -33,6 +33,9 @@ public class Location {
 
     @Column(name = "LOC_IMAGE")
     private String image;
+    
+    @Column(name = "LOC_SIMPLE_IMAGE")
+    private String simpleImage;
 
     @OneToMany(mappedBy = "location")
     @Builder.Default
