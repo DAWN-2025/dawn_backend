@@ -30,7 +30,7 @@ public class AuthController {
             String email = decodedToken.getEmail();
 
             // 인증 후 유저 자동 생성
-//            userService.createUser(uid, email);
+            userService.createUser(uid, email);
 
             String jwt = jwtUtil.generateToken(uid, email); // FireBase UID를 JWT UID에 삽입
             return ResponseEntity.ok(Map.of("token", jwt));
