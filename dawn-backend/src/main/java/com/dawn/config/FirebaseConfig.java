@@ -14,7 +14,8 @@ public class FirebaseConfig {
 
     @PostConstruct
     public void init() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("src/main/resources/dawn-a6a20-firebase-adminsdk-fbsvc-387b42759f.json");
+//        FileInputStream serviceAccount = new FileInputStream("src/main/resources/dawn-a6a20-firebase-adminsdk-fbsvc-387b42759f.json");
+        FileInputStream serviceAccount = new FileInputStream("dawn-firebase.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
