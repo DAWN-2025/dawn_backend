@@ -10,7 +10,7 @@ public class ChatResponse {
     private Long chatSeq;
     private Long userSeq;
     private Long locationSeq;
-    private String chatTarget;
+//    private String chatTarget;
     private String chatQuestion;
     private String chatAnswer;
 
@@ -19,7 +19,7 @@ public class ChatResponse {
                 .chatSeq(chat.getChatSeq())
                 .userSeq(chat.getUser().getSeq())
                 .locationSeq(chat.getLocation().getSeq())
-                .chatTarget(chat.getChatTarget())
+//                .chatTarget(chat.getChatTarget())
                 .chatQuestion(chat.getChatQuestion())
                 .chatAnswer(chat.getChatAnswer())
                 .build();
