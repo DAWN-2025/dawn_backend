@@ -13,7 +13,7 @@ public class StampResponse {
     private Long locationSeq;
     private String locationName;
     private String locationNameEng;
-    private Long userSeq;
+    private String userUid;
     private Long eventSeq;
     private LocalDateTime statusTime;
     private String stampImage;
@@ -24,7 +24,7 @@ public class StampResponse {
                 .locationSeq(stamp.getLocation().getSeq())
                 .locationName(stamp.getLocation().getName())
                 .locationNameEng(stamp.getLocation().getNameEng())
-                .userSeq(stamp.getOwner().getSeq())
+                .userUid(stamp.getOwner().getUid())
                 .eventSeq(stamp.getEvent().getSeq())
                 .statusTime(stamp.getStatusTime())
                 .stampImage(stamp.getStampImage())

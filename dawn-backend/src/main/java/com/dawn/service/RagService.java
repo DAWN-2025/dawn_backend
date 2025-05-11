@@ -24,8 +24,7 @@ public class RagService {
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
 
-    @Value("${fastapi.url}")
-    private String FAST_API_URL;
+    private final String FAST_API_URL = "http://127.0.0.1:8000/chat";
 
     public RagService(ChatRepository chatRepository, UserRepository userRepository, LocationRepository locationRepository) {
         this.chatRepository = chatRepository;
@@ -33,10 +32,10 @@ public class RagService {
         this.locationRepository = locationRepository;
     }
     // chatTarget 잠시 제거
-    public ChatResponse queryToRag(Long userSeq, Long locationSeq, String chatQuestion) {
+    public ChatResponse queryToRag(String userUid, Long locationSeq, String chatQuestion) {
         String today = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
 
-        String sessionId = "user-" + userSeq + "-" + today;
+        String sessionId = "user-" + userUid + "-" + today;
         RagRequest request = new RagRequest(sessionId, chatQuestion);
 
         // HTTP 엔티티 생성
@@ -55,7 +54,7 @@ public class RagService {
         String answer = response.getBody().getAnswer();
 
         // DB에 저장
-        User user = userRepository.findById(userSeq).orElseThrow();
+        User user = userRepository.findByUid(userUid).orElseThrow();
         Location location = locationRepository.findById(locationSeq).orElseThrow();
 
         Chat chat = Chat.builder()

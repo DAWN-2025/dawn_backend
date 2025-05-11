@@ -1,14 +1,13 @@
 package com.dawn.service.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CreateLetterRequest {
-    private Long userSeq;
+    private Long userUid;
     private Long locationSeq;
-    private String content;
-    private String stampImg;
-    private String markImg;
 }

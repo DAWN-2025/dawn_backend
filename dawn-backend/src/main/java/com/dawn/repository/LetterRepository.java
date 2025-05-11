@@ -13,7 +13,7 @@ public interface LetterRepository extends JpaRepository<Letter, Long> {
 
     @Query(value = "SELECT * FROM LETTER_TBL WHERE LETTER_USER = :userSeq AND LETTER_LOCATION = :locationSeq",
         nativeQuery = true)
-    List<Letter> findByLocationAndUser(Long locationSeq, Long userSeq);
+    List<Letter> findByLocationAndUser(Long locationSeq, String userUid);
 
     List<Letter> findByUser(User user);
 

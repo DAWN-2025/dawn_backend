@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 public class ChatResponse {
     private Long chatSeq;
-    private Long userSeq;
+    private String userUid;
     private Long locationSeq;
 //    private String chatTarget;
     private String chatQuestion;
@@ -17,11 +17,12 @@ public class ChatResponse {
     public static ChatResponse from(Chat chat) {
         return ChatResponse.builder()
                 .chatSeq(chat.getChatSeq())
-                .userSeq(chat.getUser().getSeq())
+                .userUid(chat.getUser().getUid())
                 .locationSeq(chat.getLocation().getSeq())
 //                .chatTarget(chat.getChatTarget())
                 .chatQuestion(chat.getChatQuestion())
                 .chatAnswer(chat.getChatAnswer())
                 .build();
     }
+
 }

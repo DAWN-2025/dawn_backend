@@ -34,8 +34,8 @@ public class StampController {
 
     @GetMapping("/viewStampListByUser")
     @Operation(summary = "사용자 스탬프 목록 조회", description = "특정 사용자가 수집한 스탬프 목록을 이벤트별로 조회합니다.")
-    public ResponseEntity<List<EventStampGroupResponse>> getStampsByUser(@RequestParam Long userSeq) {
-        Map<Event, List<Stamp>> grouped = stampService.getStampsByUser(userSeq);
+    public ResponseEntity<List<EventStampGroupResponse>> getStampsByUser(@RequestParam String userUid) {
+        Map<Event, List<Stamp>> grouped = stampService.getStampsByUser(userUid);
 
         List<EventStampGroupResponse> responses = grouped.entrySet().stream()
                 .map(entry -> EventStampGroupResponse.from(entry.getKey(), entry.getValue()))

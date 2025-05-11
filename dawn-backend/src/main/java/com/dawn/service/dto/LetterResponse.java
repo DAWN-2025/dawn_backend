@@ -10,21 +10,17 @@ import java.time.LocalDateTime;
 @Builder
 public class LetterResponse {
     private Long seq;
-    private Long userSeq;
+    private String userUid;
     private Long locationSeq;
     private String content;
-    private String stampImg;
-    private String markImg;
     private LocalDateTime letterTime;
 
     public static LetterResponse from(Letter letter) {
         return LetterResponse.builder()
                 .seq(letter.getSeq())
-                .userSeq(letter.getUser().getSeq())
+                .userUid(letter.getUser().getUid())
                 .locationSeq(letter.getLocation().getSeq())
                 .content(letter.getContent())
-                .stampImg(letter.getStampImg())
-                .markImg(letter.getMarkImg())
                 .letterTime(letter.getLetterTime())
                 .build();
     }
