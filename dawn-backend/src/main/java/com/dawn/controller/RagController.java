@@ -17,11 +17,11 @@ public class RagController {
     @PostMapping
     public ResponseEntity<ChatResponse> rag(
             @RequestParam Long userSeq,
-            @RequestParam Long locatonSeq,
-            @RequestParam String chatTarget,
+            @RequestParam Long locationSeq,
+//            @RequestParam String chatTarget,
             @RequestParam String question
     ) {
-        ChatResponse response = ragService.queryToRag(userSeq, locatonSeq, chatTarget, question);
+        ChatResponse response = ragService.queryToRag(userSeq, locationSeq, question);
         return ResponseEntity.ok(response);
     }
 
