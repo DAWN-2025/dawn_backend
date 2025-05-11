@@ -13,7 +13,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
     private final UserRepository userRepository;
 
     public User createUser(CreateUserRequest request) {
@@ -44,7 +43,10 @@ public class UserService {
 
 
     public User createUser(String uid, String email) {
-        return userRepository.findByUid(uid)
-                .orElseGet(() -> userRepository.save(new User(uid, email)));
-    }
-}
+        System.out.println("uid = " + uid + ", email = " + email);
+        System.out.println("createUser() 시작");
+        if (userRepository.findByUid(uid).isPresent()) {
+            throw new IllegalStateException("이미 등록된 사용자입니다: uid = " + uid);
+        }
+        return userRepository.save(new User(uid, email));
+    }}
