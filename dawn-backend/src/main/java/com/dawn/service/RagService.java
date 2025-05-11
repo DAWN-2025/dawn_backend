@@ -12,6 +12,10 @@ import com.dawn.service.dto.RagResponse;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class RagService {
@@ -20,16 +24,20 @@ public class RagService {
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
 
-    private static final String FAST_API_URL = "FAST_API_URL";
+    @Value("${fastapi.url}")
+    private String FAST_API_URL;
 
     public RagService(ChatRepository chatRepository, UserRepository userRepository, LocationRepository locationRepository) {
         this.chatRepository = chatRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
     }
+    // chatTarget 잠시 제거
+    public ChatResponse queryToRag(Long userSeq, Long locationSeq, String chatQuestion) {
+        String today = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
 
-    public ChatResponse queryToRag(Long userSeq, Long locationSeq, String chatTarget, String chatQuestion) {
-        RagRequest request = new RagRequest(chatQuestion);
+        String sessionId = "user-" + userSeq + "-" + today;
+        RagRequest request = new RagRequest(sessionId, chatQuestion);
 
         // HTTP 엔티티 생성
         HttpHeaders headers = new HttpHeaders();
@@ -40,6 +48,10 @@ public class RagService {
         ResponseEntity<RagResponse> response = restTemplate.postForEntity(
                 FAST_API_URL, entity, RagResponse.class);
 
+        if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+            throw new RuntimeException("FastAPI 응답 실패");
+        }
+
         String answer = response.getBody().getAnswer();
 
         // DB에 저장
@@ -49,7 +61,6 @@ public class RagService {
         Chat chat = Chat.builder()
                 .user(user)
                 .location(location)
-                .chatTarget(chatTarget)
                 .chatQuestion(chatQuestion)
                 .chatAnswer(answer)
                 .build();
