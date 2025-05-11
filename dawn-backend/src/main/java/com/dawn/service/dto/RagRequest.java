@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RagRequest {
-    private String query;
+    private String session_id;
+    private String question;
 }

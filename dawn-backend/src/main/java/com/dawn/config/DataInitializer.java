@@ -21,6 +21,7 @@ public class DataInitializer implements CommandLineRunner {
     private final StampRepository stampRepository;
     private final VisitedRepository visitedRepository;
     private final CommentReportRepository commentReportRepository;
+    private final ChatRepository chatRepository;
 
     @Override
     public void run(String... args) {
@@ -159,6 +160,16 @@ public class DataInitializer implements CommandLineRunner {
                 .edited(false)
                 .imageUrl("https://example.com/images/comment1.jpg")
                 .build());
+
+        Chat chat = Chat.builder()
+                .user(user)
+                .location(loc1)
+                .chatTarget("AI")
+                .chatQuestion("1980년 5월 광주에서 무슨 일이 있었나요?")
+                .chatAnswer("1980년 5월, 광주에서는 민주화를 요구하는 시민과 학생들이 신군부에 의해 무자비하게 진압당한 광주 민주화운동이 발생했습니다.")
+                .build();
+
+        chatRepository.save(chat);
 
         commentReportRepository.saveAll(List.of(
                 CommentReport.builder().comment(visited).reporter(user).reason("부적절한 표현이 포함되어 있습니다.").reportedAt(LocalDateTime.now()).build()
