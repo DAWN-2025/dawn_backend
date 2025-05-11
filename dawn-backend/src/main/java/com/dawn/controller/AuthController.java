@@ -32,10 +32,27 @@ public class AuthController {
             // 인증 후 유저 자동 생성
 //            userService.createUser(uid, email);
 
-            String jwt = jwtUtil.generateToken(uid, email);
+            String jwt = jwtUtil.generateToken(uid, email); // FireBase UID를 JWT UID에 삽입
             return ResponseEntity.ok(Map.of("token", jwt));
         } catch (FirebaseAuthException e) {
             return ResponseEntity.status(401).body("Invalid Firebase ID token");
+        }
+    }
+
+    @GetMapping("/login/jwt")
+    public ResponseEntity<?> loginWithJwt(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+
+        try {
+            String uid = jwtUtil.validateTokenAndGetUid(token);
+            String email = jwtUtil.getEmailFromToken(token); // ⬅️ 이메일 클레임도 추출한다고 가정
+
+            return ResponseEntity.ok(Map.of(
+                    "uid", uid,
+                    "email", email
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid or expired JWT token");
         }
     }
 }

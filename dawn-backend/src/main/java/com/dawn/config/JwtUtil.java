@@ -17,6 +17,9 @@ public class JwtUtil {
 
     private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24; // 24시간
 
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
     public String generateToken(String uid, String email) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + EXPIRATION_MS);
@@ -47,5 +50,28 @@ public class JwtUtil {
     public Claims getClaims(String token) {
         Key key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
+
+    public String getEmailFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("email", String.class);
+    }
+
+    public String validateTokenAndGetUid(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims.getSubject(); // subject = uid
+        } catch (JwtException e) {
+            throw new RuntimeException("Invalid or expired JWT", e);
+        }
     }
 }
