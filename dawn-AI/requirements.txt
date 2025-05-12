@@ -1,0 +1,39 @@
+aiohttp==3.10.11
+anyio==4.9.0
+chromadb==0.4.22
+docx2txt==0.8
+fastapi==0.115.12
+google-auth==2.40.1
+google-cloud-aiplatform==1.92.0
+google-cloud-storage==2.19.0
+grpcio==1.72.0rc1
+langchain==0.3.25
+langchain-community==0.3.23
+langchain-core==0.3.59
+langchain-google-vertexai==2.0.23
+langchain-pinecone==0.2.6
+langchain-text-splitters==0.3.8
+protobuf==6.31.0rc2
+pydantic==2.11.4
+pypdf==3.17.1
+python-docx==1.0.1
+python-dotenv==1.0.0
+PyYAML==6.0.2
+requests==2.32.3
+sentence-transformers==2.2.2
+SQLAlchemy==2.0.40
+tenacity==8.5.0
+uvicorn==0.34.2
+# %pip install langchain langchain-core langchain-community langchain-text-splitters langchain-pinecone docx2txt
+# %pip install -qU langchain-google-vertexai
+# %pip install langchain-pinecone
+# %pip install -qU pypdf
+
+# pip install fastapi pydantic python-dotenv google-auth vertexai langchain langchain-community langchain-text-splitters langchain-google-vertexai pinecone-client langchain-pinecone langchain-core chromadb sentence-transformers pypdf docx2txt uvicorn
+
+# %pip install langchain langchain-core langchain-community langchain-text-splitters langchain-pinecone docx2txt
+# %pip install -qU langchain-google-vertexai
+# %pip install langchain-pinecone
+# %pip install -qU pypdf
+
+# pip install fastapi pydantic python-dotenv google-auth vertexai langchain langchain-community langchain-text-splitters langchain-google-vertexai pinecone-client langchain-pinecone langchain-core chromadb sentence-transformers pypdf docx2txt uvicorn
