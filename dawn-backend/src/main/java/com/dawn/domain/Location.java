@@ -21,7 +21,6 @@ public class Location {
     private Long seq;
 
     @Column(name = "LOC_NAME", nullable = false)
-    @JoinColumn
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

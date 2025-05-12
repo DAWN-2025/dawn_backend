@@ -1,0 +1,81 @@
+#version: '3.8'
+#
+#services:
+#  mysql:
+#    container_name: dawn-mysql
+#    image: mysql:latest
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#      MYSQL_DATABASE: ${MYSQL_DATABASE}
+#    ports:
+#      - "3306:3306"
+#    healthcheck:
+#      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#
+#  spring-boot-app:
+#    container_name: dawn-backend
+#    build:
+#      context: dawn-backend
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#    environment:
+#      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+#      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+#      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+
+version: '3.8'
+
+services:
+  mysql:
+    container_name: dawn-mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  spring-boot-app:
+    container_name: dawn-backend
+    build:
+      context: ./dawn-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file:
+      - ./dawn-backend/.env        # ✅ 명시적으로 Spring용 .env 지정
+    environment:
+      RAG_API_URL: http://rag-api:8000  # 추가 환경변수는 여기에
+
+  rag-api:
+    container_name: dawn-rag-api
+    build:
+      context: ./dawn-AI
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./dawn-AI/.env             # ✅ 명시적으로 FastAPI용 .env 지정
+    environment:
+      - PYTHONUNBUFFERED=1
+
+networks:
+  default:
+    name: dawn-network
+    driver: bridge

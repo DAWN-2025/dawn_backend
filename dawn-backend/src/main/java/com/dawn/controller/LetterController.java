@@ -29,8 +29,8 @@ public class LetterController {
 
     @GetMapping("/byLocation")
     @Operation(summary = "장소 기준 편지 조회", description = "특정 장소에서 생성된 모든 편지를 조회합니다.")
-    public ResponseEntity<List<LetterResponse>> byLocation(@RequestParam Long locationSeq, @RequestParam Long userSeq) {
-        List<LetterResponse> result = letterService.getByLocation(locationSeq, userSeq).stream()
+    public ResponseEntity<List<LetterResponse>> byLocation(@RequestParam Long locationSeq, @RequestParam String userUid) {
+        List<LetterResponse> result = letterService.getByLocation(locationSeq, userUid).stream()
                 .map(LetterResponse::from)
                 .toList();
         return ResponseEntity.ok(result);
@@ -38,8 +38,8 @@ public class LetterController {
 
     @GetMapping("/byUser")
     @Operation(summary = "사용자 기준 편지 조회", description = "특정 사용자가 받은 모든 편지를 조회합니다.")
-    public ResponseEntity<List<LetterResponse>> byUser(@RequestParam Long userSeq) {
-        List<LetterResponse> result = letterService.getByUser(userSeq).stream()
+    public ResponseEntity<List<LetterResponse>> byUser(@RequestParam String userUid) {
+        List<LetterResponse> result = letterService.getByUser(userUid).stream()
                 .map(LetterResponse::from)
                 .toList();
         return ResponseEntity.ok(result);

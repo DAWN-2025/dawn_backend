@@ -18,7 +18,7 @@ public class ChatService {
     private final LocationRepository locationRepository;
 
     public Chat saveChat(SaveChatRequest request) {
-        User user = userRepository.findById(request.getUserSeq())
+        User user = userRepository.findByUid(request.getUserUid())
                 .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
         Location location = locationRepository.findById(request.getLocSeq())
                 .orElseThrow(() -> new IllegalArgumentException("장소가 존재하지 않습니다."));
@@ -26,7 +26,6 @@ public class ChatService {
         Chat chat = Chat.builder()
                 .user(user)
                 .location(location)
-                .chatTarget(request.getChatTarget())
                 .chatQuestion(request.getChatQuestion())
                 .chatAnswer(request.getChatAnswer())
                 .build();

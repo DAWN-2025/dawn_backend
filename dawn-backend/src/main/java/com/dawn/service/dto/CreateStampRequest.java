@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class CreateStampRequest {
     private Long locationSeq;
     private Long eventSeq;
-    private Long userSeq;
+    private String userUid;
 }
