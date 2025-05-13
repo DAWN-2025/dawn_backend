@@ -47,8 +47,11 @@ public class StampService {
     }
 
     public Map<Event, List<Stamp>> getStampsByUser(String userUid) {
-        Optional<User> user = userService.getUserByUid(userUid);
-        List<Stamp> stampList = stampRepository.findByOwner(user.orElse(null));
+        User user = userService.getUserByUid(userUid)
+                .orElseThrow(() -> new IllegalArgumentException("해당 UID의 사용자가 존재하지 않습니다."));
+
+        List<Stamp> stampList = stampRepository.findByOwner(user);
+
         return stampList.stream()
                 .collect(Collectors.groupingBy(Stamp::getEvent));
     }

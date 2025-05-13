@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateLetterRequest {
-    private Long userUid;
+    private String userUid;
     private Long locationSeq;
 }

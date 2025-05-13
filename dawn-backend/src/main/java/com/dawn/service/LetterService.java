@@ -7,7 +7,9 @@ import com.dawn.repository.LetterRepository;
 import com.dawn.repository.LocationRepository;
 import com.dawn.repository.UserRepository;
 import com.dawn.service.dto.CreateLetterRequest;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
@@ -24,17 +26,20 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LetterService {
 
     private final LetterRepository letterRepository;
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
 
-    private final String FAST_API_URL = "http://127.0.0.1:8000/generate-letter";
+
+    @Value("${letter.api.url}")
+    private String FAST_API_URL;
 
 
     public Letter create(CreateLetterRequest request) {
-        Long userUid = request.getUserUid();
+        String userUid = request.getUserUid();
         Long locationSeq = request.getLocationSeq();
 
         String today = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
@@ -60,7 +65,7 @@ public class LetterService {
         String content = (String) response.getBody().get("letter");
 
         // 2. 사용자, 장소 조회
-        User user = userRepository.findById(userUid).orElseThrow();
+        User user = userRepository.findByUid(userUid).orElseThrow();
         Location location = locationRepository.findById(locationSeq).orElseThrow();
 
         // 3. 편지 생성

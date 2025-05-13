@@ -43,8 +43,6 @@ public class UserService {
 
 
     public User createUser(String uid, String email) {
-        System.out.println("uid = " + uid + ", email = " + email);
-        System.out.println("createUser() 시작");
         if (userRepository.findByUid(uid).isPresent()) {
             throw new IllegalStateException("이미 등록된 사용자입니다: uid = " + uid);
         }

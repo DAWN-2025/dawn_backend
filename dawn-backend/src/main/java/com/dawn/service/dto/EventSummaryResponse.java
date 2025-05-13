@@ -12,6 +12,7 @@ public class EventSummaryResponse {
 
     private Long id;
     private String name;
+    private String nameEng;
     private String eventImage;
     private List<KeywordSummaryResponse> keywords;
 
@@ -20,6 +21,7 @@ public class EventSummaryResponse {
         return EventSummaryResponse.builder()
                 .id(event.getSeq())
                 .name(event.getName())
+                .nameEng(event.getNameEng())
                 .eventImage(event.getEventImage())
                 .keywords(event.getKeywords().stream()
                         .map(KeywordSummaryResponse::from)

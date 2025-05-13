@@ -39,29 +39,33 @@ public class DataInitializer implements CommandLineRunner {
                 .nation("대한민국")
                 .nameEng("Gwangju Uprising")
                 .nationEng("Republic of Korea")
-                .eventImage("https://example.com/images/gwangju.jpg")
-                .eventStampImage("https://example.com/images/stamp1.jpg")
+                .eventImage("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/header-uprising.jpeg?alt=media&token=dee7064b-2c21-4af4-8827-c21fef85936b")
+                .eventStampImage("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/stamp_uprising.png?alt=media&token=993339bc-4886-429a-8a32-df5144a4081b")
                 .build());
 
         Event event2 = eventRepository.save(Event.builder()
-                .name("광주학생항일운동")
-                .shortInfo("1929년 학생들이 주도한 항일 운동")
-                .background("긴 설명 생략 또는 요약...")
-                .progress("긴 설명 생략 또는 요약...")
-                .meaning("긴 설명 생략 또는 요약...")
-                .date(LocalDateTime.of(1929, 11, 3, 0, 0))
+                .name("6.25 전쟁")
+                .shortInfo("1950년 6월 25일 북한의 남침으로 발발한 전쟁")
+                .background("1945년, 전쟁이 발발하기 5년 전, 일본 제국으로부터 해방된 한반도는 해방 직후 미국과 소련에 의해 삼팔선을 기준으로 남과 북으로 분단되었다. 이후 미군과 소련군의 점령이 끝나고 각각 대한민국과 조선민주주의인민공화국 정부가 수립되었다. 북한은 해방 직후부터 소련과 중국을 설득하여 한반도를 적화통일하려는 계획을 세우고 준비를 이어갔다.\n\n 소련은 자국 군대가 38선 이북에 진주한 이후 아시아의 공산화를 목적으로 북한에 공산 정권을 세우고 한반도의 통일을 방해하며 남침 기회를 엿보았다. 중국 공산당은 1949년 10월 1일 중국 국민당을 대륙에서 몰아내고 중화인민공화국을 수립하였다. 반면 미국은 주한미군을 1949년 6월에 철수하였고, 1950년 1월 애치슨 선언을 통해 극동 방위선을 일본 오키나와와 필리핀을 잇는 선이라고 밝히며 대한민국에 대한 군사 원조를 축소해 나갔다. \n\n이는 제2차 세계대전 직후 소련과의 직접적인 군사 충돌이 제3차 세계대전으로 이어질 수 있다는 국제 정세를 고려한 조치였으며, 소련 역시 같은 이유로 북한에 대한 공개적인 지원을 중단하였다.")
+                .progress("1950년 6월 25일 오전 3시 30분,\n김일성의 명령 하에 조선인민군은 '대한민국이 공격해 왔으므로 부득이 반격한다'는 허위 선전을 내세우며,\n소련에서 지원한 최신형 T-34/85 전차를 앞세워 38도선과 동해안 연선 등 11개소에서 경계를 넘어 대한민국을 기습 남침하였다.\n\n대한민국은 수적으로 열세였고 장비도 부족하였다.\n오전 9시경 개성 방어선이 무너지고, 당일 오전에 동두천과 포천이 함락되었다.\n26일 오후에는 의정부가, 27일 정오에는 서울 도봉구 창동 방어선이 돌파되었고, 이어 미아리 방어선도 조선인민군의 전차에 의해 붕괴되었다.\n28일 새벽에는 서울 시내가 점령되었으며, 오전 2시 30분경 한강 대교가 폭파되었다.\n한강 대교와 철교에는 미 공군의 항공기가 당시 사용하던 AN-M64 미제 폭탄을 투하했다.\n\n한반도에서 발발한 전쟁은 냉전으로 긴장된 전 세계에 큰 충격을 주었다.\n전쟁 발발 후 본국과 연락이 두절된 주미 한국대사 겸 유엔 대표 장면은 미 국무성과 철야 협의를 거쳐, 한국 문제를 유엔 안보이사회에 긴급 제소하였다.\n그 결과 6월 25일과 27일 결의로 조선인민군을 침략자로 규정하고 즉시 38선 이북으로 철수할 것과, 회원국은 침략자를 원조하지 말고 격퇴에 협력하라는 결의가 채택되었다.\n미국 대통령 해리 S. 트루먼은 6월 27일 미 해공군의 출동을 명령하고, 30일에는 지상군 파병과 해상 봉쇄도 명령하였다.\n6월 28일 서울은 조선인민군에 함락되었으나, 장면은 미국의 소리 방송을 통해 유엔 결의사항을 본국에 전달하였다.\n\n7월 7일 유엔군이 조직되었고, 8일에는 유엔 깃발이 전장에 처음 등장하였다.\n7월 14일에는 대한민국 국군의 작전 지휘권이 미군에게 넘어갔다.\n미국 제24사단과 국군은 전쟁 초기에 압도적인 북한군에 맞서 지연 작전을 펼쳐 한미 연합군의 증원 시간을 확보하였다.\n\n북한군은 대전을 넘어 호남, 경북 왜관, 포항 등 세 방향으로 침공을 계속하였다.\n조선인민군은 남해안까지 침입하며 부산-대구 보급선을 차단해 한미 양군을 바다로 몰아넣으려 했다.\n대한민국 정부는 대전과 대구를 거쳐 부산으로 이전하였다.\n한미 연합군은 낙동강 전선을 중심으로 동해안 포항부터 왜관, 마산까지 이르는 워커 라인을 구축하고 최후 결전을 준비하였다.\n\n8월 15일 조선인민군은 대구 침공을 시도하며 병력 6만 명과 수십 대의 전차를 집중시켰으나, 16일 미 공군 B-29의 전략 폭격으로 궤멸되었다.\n이 시기 연합군 병력은 한국군 5개 사단, 미군 4개 사단, 영국군 2개 대대, 호주군 1개 대대, 기타 10개국 병력으로 증원되었다.\n이들은 북한군의 주력을 흡수 유도한 후, 9월 15일 더글러스 맥아더 장군의 지휘 아래 인천 상륙 작전을 성공적으로 수행하였다.\n\n9월 28일 낙동강 방어선을 돌파하여 대대적인 반격을 개시하였고,\n같은 날 이승만 대통령은 서울 중앙청에서 맥아더 장군과 함께 서울 수복식을 거행하였다.\n유엔 총회는 38선 돌파를 승인하였고, 이에 따라 유엔군은 10월 19일 평양에 진입하고 26일에는 초산까지 도달하였다.\n\n하지만 11월 28일, 중화인민공화국이 중국 인민지원군 28만 명을 투입하면서 전세는 급변하였다.\n연합군은 장진호 전투에서 치열한 혈전을 벌인 뒤 철수를 시작하였고,\n서울 시민은 1·4 후퇴를 겪었다.\n이 와중에 거창 양민 학살 사건, 국민방위군 사건 등이 발생하였다.")
+                .meaning("6.25 전쟁은 한반도 분단을 고착화시키고, 동서 냉전을 심화시킨 역사적 사건입니다.\n또한, 유엔의 집단 안보 체제를 시험하는 첫 번째 사례로, 평화의 중요성을 인식하는 계기가 되었습니다.\n\n6.25 전쟁의 주요 의의:\n\n한반도 분단 고착화:\n6.25 전쟁은 1948년 이후 남북 분단 상태를 더욱 굳건하게 만들었고,\n이후에도 지속적인 긴장 상태를 유지하게 했습니다.\n\n동서 냉전 심화:\n전쟁은 공산권과 자유 진영의 대립을 더욱 격화시키고,\n양 진영 간 무장 경쟁을 심화시키는 계기가 되었습니다.\n\n유엔 집단 안보 체제 시험:\n6.25 전쟁은 유엔이 국가 간의 평화를 유지하고,\n집단적 안보를 위해 힘을 합치는 첫 번째 사례였습니다.\n\n평화의 중요성 인식:\n전쟁의 참혹한 결과는 평화가 얼마나 소중한지를 깨닫게 하고,\n전쟁 해결을 위한 국제적 노력을 강화하는 계기가 되었습니다.\n\n한국 사회에 미친 영향:\n6.25 전쟁은 한국 사회에 정치, 경제, 사회적으로 다양한 영향을 미쳤습니다.\n특히, 통치의 독재화, 반공주의의 확산, 도시화, 군부의 비대화 등이 발생했습니다.\n\n유엔군 참전의 의의:\n유엔군의 참전은 유엔의 기본 정신에 따른 최초의 집단 행동으로서,\n한국을 돕고 공산주의 침략을 막는 데 결정적인 역할을 했습니다.")
+                .shortInfoEng("The Korean War began on June 25, 1950, when North Korea launched a surprise invasion of South Korea across the 38th parallel.")
+                .backgroundEng("In 1945, five years before the outbreak of war, the Korean Peninsula was liberated from Japanese colonial rule. Shortly afterward, the peninsula was divided along the 38th parallel by the United States and the Soviet Union. Following the end of military occupation, two separate governments were established: the Republic of Korea in the South and the Democratic People's Republic of Korea in the North.\n\nNorth Korea, seeking to unify the peninsula under communism, formulated an invasion plan with support from the Soviet Union and China. The Soviet Union, aiming to spread communism in Asia, installed a pro-Soviet regime in the North and obstructed efforts toward peaceful unification. Meanwhile, China established the People's Republic of China in 1949. The United States withdrew its forces from Korea in June 1949 and, through the Acheson Line declared in January 1950, excluded Korea from its defense perimeter in East Asia.\n\nThis strategic vacuum and global fear of a direct clash between the US and Soviet Union contributed to the outbreak of the war. While the US was cautious about triggering another world war, the Soviet Union also withdrew direct support from the North.")
+                .progressEng("At 3:30 a.m. on June 25, 1950, under Kim Il-sung’s command, North Korean forces launched a surprise attack across 11 fronts along the 38th parallel and the eastern coastline, claiming falsely that South Korea had invaded first.\n\nSouth Korea, inferior in both numbers and equipment, quickly lost ground. Kaesong, Dongducheon, and Pocheon fell on the first day. On June 27, the North broke through Seoul's outer defenses, and by June 28, Seoul was occupied. The Han River bridge was destroyed early that morning by retreating South Korean forces to slow the advance.\n\nThe war sent shockwaves through the Cold War-torn world. South Korea’s ambassador to the U.S., Chang Myon, worked overnight to bring the issue to the UN Security Council, which adopted resolutions on June 25 and 27 designating North Korea as the aggressor and calling for its withdrawal.\n\nPresident Truman ordered the deployment of U.S. air and naval forces on June 27, and ground troops followed on June 30. On July 7, the United Nations formed a unified command under General Douglas MacArthur, and on July 8, UN forces flew the UN flag for the first time in combat. By July 14, operational control of South Korean forces was transferred to the U.S.\n\nAlthough North Korean forces continued their advance, reaching deep into South Korea, UN and South Korean forces regrouped along the Nakdong River and held the line. On August 15, North Korea attempted to invade Daegu with 60,000 troops but was repelled by B-29 strategic bombers.\n\nOn September 15, the UN forces launched the Incheon Landing, a decisive counteroffensive led by General MacArthur. By September 28, Seoul was recaptured, and the UN approved advancement beyond the 38th parallel. On October 19, UN forces entered Pyongyang, and by the 26th, reached Chosan near the Chinese border.\n\nHowever, on November 28, China intervened with 280,000 troops, drastically changing the tide of war. The Battle of Chosin Reservoir marked a brutal withdrawal, and Seoul experienced the painful '1.4 Retreat.'\n\nDuring this period, tragic events such as the Geochang massacre and the National Defense Corps incident occurred.")
+                .meaningEng("The Korean War solidified the division of the Korean Peninsula and intensified the Cold War between East and West. It was the first major test of the United Nations' collective security system, highlighting the importance of maintaining global peace.\n\nKey Significances of the Korean War:\n\nSolidification of the Korean Divide:\nThe war entrenched the separation of North and South Korea, prolonging tensions that continue to this day.\n\nDeepening of the Cold War:\nThe conflict escalated the ideological and military confrontation between the communist bloc and the free world, accelerating the arms race.\n\nFirst Test of UN Collective Security:\nThe Korean War marked the first case where the UN responded militarily to an act of aggression, setting a precedent for collective action to maintain peace.\n\nRecognition of Peace's Importance:\nThe war’s devastation underscored the value of peace and encouraged international cooperation in conflict resolution.\n\nImpact on South Korean Society:\nThe war left long-lasting effects on South Korea’s political, economic, and social structures, including the rise of authoritarianism, the spread of anti-communism, rapid urbanization, and the growth of military power.\n\nSignificance of UN Troop Participation:\nThe UN military intervention was the first embodiment of the UN’s founding principles, playing a crucial role in defending South Korea and resisting communist aggression.")
+                .date(LocalDateTime.of(1950, 6, 25, 0, 0))
                 .nation("대한민국")
-                .nameEng("Gwangju Student Independence Movement")
+                .nameEng("Korean War")
                 .nationEng("Republic of Korea")
-                .eventImage("https://example.com/images/independence.jpg")
-                .eventStampImage("https://example.com/images/stamp2.jpg")
+                .eventImage("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/6.25_episodes.png?alt=media&token=4acf9d52-2afd-4510-a7bd-7a23f8b3b57d")
+                .eventStampImage("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/stamp_625.png?alt=media&token=c0787c1a-3673-4049-9d91-f187ff4d26ba")
                 .build());
 
         Location loc1 = locationRepository.save(Location.builder()
                 .name("전일빌딩 245")
                 .event(event1)
                 .address("광주광역시 동구 금남로 245")
-                .image("https://example.com/images/geumnamro.jpg")
+                .image("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/header-Jeonil-building.png?alt=media&token=2cdaa65a-ca03-4871-b5a8-4900aca0c1ec")
                 .simpleImage("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/location-jeonil.jpeg?alt=media&token=a28ab91f-2ec8-466b-859a-761ec1ac65ab")
                 .shortInfo("전일빌딩은 옛 전남도청 바로 앞에 위치한 건물로, 1980년 5·18 민주화운동 당시 계엄군의 헬기 기총소사 흔적이 발견된 장소.")
                 .shortInfoEng("SThe Jeonil Building, located directly in front of the former South Jeolla Provincial Office, is the site where evidence of helicopter machine gun fire by martial law forces during the May 18 Gwangju Democratization Movement in 1980 was discovered.")
@@ -83,7 +87,7 @@ public class DataInitializer implements CommandLineRunner {
                 .name("전남대학교 정문")
                 .event(event1)
                 .address("광주광역시 북구 용봉로 77 전남대학교")
-                .image("https://example.com/images/chonnam_gate.jpg")
+                .image("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/location-cnu.jpeg?alt=media&token=2320f27e-b9e6-4646-8474-06f5ba8f4117")
                 .simpleImage("https://firebasestorage.googleapis.com/v0/b/dawn-a6a20.firebasestorage.app/o/location-cnu.jpeg?alt=media&token=2320f27e-b9e6-4646-8474-06f5ba8f4117")
                 .shortInfo("전남대학교 정문은 개교 이래 학생들이 더 나은 세상을 꿈꾸며 민주화를 외쳤던 상징적인 장소이자, 5·18 민중항쟁이 시작된 역사적인 현장이다.")
                 .shortInfoEng("The main gate of Chonnam National University is a symbolic site where students have long voiced their hopes for a better world and democracy—and most notably, it is where the May 18 Gwangju Uprising began.")
@@ -114,6 +118,14 @@ public class DataInitializer implements CommandLineRunner {
                 Keyword.builder().keyword("#대한민국").keywordEng("#Korea").event(event1).korEngFlag(1).build(),
                 Keyword.builder().keyword("#시민 저항").keywordEng("#Civil Resistance").event(event1).korEngFlag(1).build(),
                 Keyword.builder().keyword("#신군부").keywordEng("#Junta").event(event1).korEngFlag(1).build()
+        ));
+
+        keywordRepository.saveAll(List.of(
+                Keyword.builder().keyword("#한국전쟁").keywordEng("#KoreanWar").event(event2).korEngFlag(1).build(),
+                Keyword.builder().keyword("#분단").keywordEng("#Division").event(event2).korEngFlag(1).build(),
+                Keyword.builder().keyword("#냉전").keywordEng("#ColdWar").event(event2).korEngFlag(1).build(),
+                Keyword.builder().keyword("#유엔군").keywordEng("#UNForces").event(event2).korEngFlag(1).build(),
+                Keyword.builder().keyword("#인천상륙작전").keywordEng("#IncheonLanding").event(event2).korEngFlag(1).build()
         ));
 
         // 전남대 정문 관련 키워드

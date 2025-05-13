@@ -9,14 +9,15 @@ import com.dawn.repository.UserRepository;
 import com.dawn.service.dto.ChatResponse;
 import com.dawn.service.dto.RagRequest;
 import com.dawn.service.dto.RagResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @Service
 public class RagService {
     private final RestTemplate restTemplate = new RestTemplate();
@@ -24,7 +25,9 @@ public class RagService {
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
 
-    private final String FAST_API_URL = "http://127.0.0.1:8000/chat";
+//    @Value("${rag.api.url}")
+    private final String FAST_API_URL = "http://rag-api:8000/chat";
+
 
     public RagService(ChatRepository chatRepository, UserRepository userRepository, LocationRepository locationRepository) {
         this.chatRepository = chatRepository;
