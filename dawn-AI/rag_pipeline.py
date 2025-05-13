@@ -13,6 +13,8 @@ from langchain.prompts import PromptTemplate
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from google.cloud import storage
+import tempfile, os, requests
 
 # 1. 환경 변수 및 GCP 인증
 load_dotenv()
@@ -22,6 +24,40 @@ credentials, project_id = google.auth.default()
 vertexai.init(project="dawn-a6a20", location="us-central1")
 
 # 3. 문서 로딩 및 분할
+
+# 1) GCS에서 docx 하나 받아서 로드
+def load_doc_from_gcs(bucket: str, blob: str):
+    client  = storage.Client()                       # 환경변수 or ADC 인증
+    bucket  = client.bucket(bucket)
+    blob    = bucket.blob(blob)
+
+    with tempfile.NamedTemporaryFile(suffix=".docx", delete=False) as tf:
+        blob.download_to_file(tf)                    # 스트림 다운로드
+        tf.flush()
+        path = tf.name
+
+    docs = Docx2txtLoader(path).load_and_split(
+        text_splitter=RecursiveCharacterTextSplitter(
+            chunk_size=300, chunk_overlap=50)
+    )
+    os.remove(path)                                  # 임시 파일 정리
+    return docs
+
+# 2) HTTPS URL(OneDrive·Dropbox·프리사인 URL)에서 바로 받기
+def load_doc_from_url(url: str):
+    resp = requests.get(url, timeout=15)
+    resp.raise_for_status()
+    with tempfile.NamedTemporaryFile(suffix=".docx", delete=False) as tf:
+        tf.write(resp.content)
+        tf.flush()
+        path = tf.name
+    docs = Docx2txtLoader(path).load_and_split(
+        text_splitter=RecursiveCharacterTextSplitter(
+            chunk_size=300, chunk_overlap=50)
+    )
+    os.remove(path)
+    return docs
+
 loader = Docx2txtLoader('./5-18data.docx')
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50)
 documents = loader.load_and_split(text_splitter=text_splitter)
