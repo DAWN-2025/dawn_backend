@@ -58,7 +58,7 @@ def load_doc_from_url(url: str):
     os.remove(path)
     return docs
 
-loader = Docx2txtLoader('./5-18data.docx')
+loader = Docx2txtLoader('./5-18data.docx') # 클라우드에서 받아 올 시에 load_doc_from_gcs(bucket, blob), URL로 받아올 시에 load_doc_frokm_url(url)
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50)
 documents = loader.load_and_split(text_splitter=text_splitter)
 
