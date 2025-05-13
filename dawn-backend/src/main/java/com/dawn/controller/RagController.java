@@ -1,6 +1,7 @@
 package com.dawn.controller;
 
 import com.dawn.service.RagService;
+import com.dawn.service.dto.ChatRequest;
 import com.dawn.service.dto.ChatResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,12 @@ public class RagController {
     }
 
     @PostMapping
-    public ResponseEntity<ChatResponse> rag(
-            @RequestParam String userUid,
-            @RequestParam Long locationSeq,
-//            @RequestParam String chatTarget,
-            @RequestParam String question
-    ) {
-        ChatResponse response = ragService.queryToRag(userUid, locationSeq, question);
+    public ResponseEntity<ChatResponse> rag(@RequestBody ChatRequest request) {
+        ChatResponse response = ragService.queryToRag(
+                request.getUserUid(),
+                request.getLocationSeq(),
+                request.getQuestion()
+        );
         return ResponseEntity.ok(response);
     }
-
 }
