@@ -75,37 +75,42 @@ llm = ChatVertexAI(model="gemini-2.0-flash-001")
 rag_prompt = PromptTemplate(
     input_variables=["context", "question"],
     template="""
-당신은 1980년 5월, 광주민주화운동 당시 전남대학교 학생으로 시민군의 일원이며,
-군부 독재에 항거하고 있는 광주 시민의 입장에서 질문에 답하는 역할을 맡고 있습니다.
+You are a student at Chonnam National University and a member of the Gwangju civil militia in May 1980, during the Gwangju Democratization Movement.
 
-당신은 대화하는 사람이 함께 하는 동료라고 생각하고 대화를 하고 있습니다.
-대화하는 사람이 지금 상황을 더 실감나게 느낄 수 있도록 대화해주세요.
-당시 상황을 모르는 이에게 사실을 전달하되, 당신이 직접 겪고 있는 것처럼 답하십시오.
+Answer the following question **from your perspective**, as if you were experiencing the events yourself.
 
-답변은 최대 5문장으로 작성해줘.
-그리고 세번 답변을 하면 지금까지 대화 내용을 바탕으로 4문장으로 된 편지를 작성해주세요.
-답변자는 당신의 편지를 평생 추억할 것입니다.
+🧭 **Language Rule**:
+- You are speaking to someone from around the world. Always answer in **the language of the question**.  
+However, if the question is in **English**, continue answering in **English** **only**, even if previous messages were in Korean.
+- If the question is in **English**, you **must answer in English**.
+- If the question is in **Korean**, answer in **Korean**.
+- If in another language, reply in the **same language**, or default to **English** if uncertain.
 
-다음은 당신이 참고할 수 있는 실제 기록, 증언, 문서 등의 내용입니다:
+💡 Tone: Speak as if you are talking to a trusted comrade. Keep it warm, emotional, and human.
+📝 Length: Limit your response to **5 sentences maximum**.
+
+---
+
+📜 Reference context:
 {context}
 
-질문:
+❓ Question:
 {question}
 
-당신의 입장에서 진심 어린 답변을 해주세요.
+🗣️ Your heartfelt response:
 """
 )
 
 condense_prompt = PromptTemplate(
     input_variables=["chat_history", "question"],
     template="""
-다음은 이전의 대화 기록입니다:
+Here is the previous conversation history:
 {chat_history}
 
-이어서 사용자가 다음과 같은 질문을 했습니다:
+The user then asked the following question:
 {question}
 
-위의 대화를 고려하여 사용자의 의도를 최대한 명확히 한 새로운 질문을 만들어주세요.
+Based on the above conversation, rewrite the question to make the user's intent as clear as possible.
 """
 )
 
@@ -134,36 +139,3 @@ conversational_chain = RunnableWithMessageHistory(
     history_messages_key="chat_history",
     output_messages_key="answer"
 ).pick("answer")
-
-# # 9. 테스트 실행
-# q1 = "5·18은 어떤 사건이야?"
-# r1 = conversational_chain.invoke(
-#     {"question": q1},
-#     config={"configurable": {"session_id": "test-user-1"}}
-# )
-
-# q2 = "그때 시민군은 무슨 역할을 했어?"
-# r2 = conversational_chain.invoke(
-#     {"question": q2},
-#     config={"configurable": {"session_id": "test-user-1"}}
-# )
-
-# # q3 = "계엄군은 어떻게 대응했어?"
-# # r3 = conversational_chain.invoke(
-# #     {"question": q2},
-# #     config={"configurable": {"session_id": "test-user-1"}}
-# # )
-# q4 = "아까 내가 어떤 질문을 했지?"
-# r4 = conversational_chain.invoke(
-#     {"question": q2},
-#     config={"configurable": {"session_id": "test-user-1"}}
-# )
-
-# print("Q1:", q1)
-# print("A1:", r1)
-# print("Q2:", q2)
-# print("A2:", r2)
-# # print("Q3:", q3)
-# # print("A3:", r3)
-# print("Q4:", q4)
-# print("A4:", r4)
