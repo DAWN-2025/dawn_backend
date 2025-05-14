@@ -7,7 +7,6 @@ import com.dawn.repository.LetterRepository;
 import com.dawn.repository.LocationRepository;
 import com.dawn.repository.UserRepository;
 import com.dawn.service.dto.CreateLetterRequest;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,12 +77,14 @@ public class LetterService {
 
         return letterRepository.save(letter);
     }
+
     public List<Letter> getByLocation(Long locationSeq, String userUid) {
+        User user = userRepository.findByUid(userUid)
+                .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
         Location location = locationRepository.findById(locationSeq)
                 .orElseThrow(() -> new IllegalArgumentException("장소가 존재하지 않습니다."));
-        return letterRepository.findByLocationAndUser(locationSeq, userUid);
+        return letterRepository.findByLocationAndUser(location, user);
     }
-
     public List<Letter> getByUser(String userUid) {
         User user = userRepository.findByUid(userUid)
                 .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
