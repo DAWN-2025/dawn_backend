@@ -9,12 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface LetterRepository extends JpaRepository<Letter, Long> {
+
     List<Letter> findByLocation(Location location);
 
-    @Query(value = "SELECT * FROM LETTER_TBL WHERE LETTER_USER = :userSeq AND LETTER_LOCATION = :locationSeq",
-        nativeQuery = true)
-    List<Letter> findByLocationAndUser(Long locationSeq, String userUid);
+    //    @Query(value = "SELECT * FROM LETTER_TBL WHERE LETTER_USER = :userUid & LETTER_LOCATION = :locationSeq",
+//            nativeQuery = true)
+    List<Letter> findByLocationAndUser(Location location, User user);
 
     List<Letter> findByUser(User user);
-
 }
+
