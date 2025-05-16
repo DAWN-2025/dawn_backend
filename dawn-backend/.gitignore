@@ -1,4 +1,4 @@
-HELP.md
+-HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -37,3 +37,4 @@ out/
 .vscode/
 src/main/resources/dawn-a6a20-firebase-adminsdk-fbsvc-387b42759f.json
 .env
+.json
