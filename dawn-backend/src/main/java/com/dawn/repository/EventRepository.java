@@ -33,7 +33,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 """)
     List<Event> searchEventByKeyword(@Param("keyword") String keyword);
 
-    @Query(value = "SELECT et.EVENT_SEQ, et.EVENT_NAME, et.EVENT_NAME_ENG, et.EVENT_STAMP_IMAGE FROM EVENT_TBL et", nativeQuery = true)
+    @Query(value = "SELECT et.event_seq, et.event_name, et.event_name_eng, et.event_stamp_image FROM event_tbl et", nativeQuery = true)
     List<EventStampResponse> getAllEventStampImg();
 
 }

@@ -32,7 +32,7 @@ public class Letter {
     @Column(name = "LETTER_MARK_IMG", length = 45)
     private String markImg;
 
-    @Column(name = "LETTER_CONTENT", columnDefinition = "TEXT")
+    @Column(name = "LETTER_CONTENT", columnDefinition = "LONGTEXT")
     private String content;
 
     @Column(name = "LETTER_TIME", nullable = false)

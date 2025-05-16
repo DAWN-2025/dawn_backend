@@ -27,9 +27,9 @@ public class Chat {
     @Column(name = "CHAT_TARGET")
     private String chatTarget;
 
-    @Column(name = "CHAT_QUESTION")
+    @Column(name = "CHAT_QUESTION",columnDefinition = "LONGTEXT")
     private String chatQuestion;
 
-    @Column(name = "CHAT_ANSWER")
+    @Column(name = "CHAT_ANSWER",columnDefinition = "LONGTEXT")
     private String chatAnswer;
 }

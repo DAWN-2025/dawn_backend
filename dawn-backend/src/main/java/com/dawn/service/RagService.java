@@ -22,16 +22,16 @@ import java.time.format.DateTimeFormatter;
 public class RagService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ChatRepository chatRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final LocationRepository locationRepository;
 
 //    @Value("${rag.api.url}")
     private final String FAST_API_URL = "http://rag-api:8000/chat";
 
 
-    public RagService(ChatRepository chatRepository, UserRepository userRepository, LocationRepository locationRepository) {
+    public RagService(ChatRepository chatRepository, UserService userService, LocationRepository locationRepository) {
         this.chatRepository = chatRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.locationRepository = locationRepository;
     }
     // chatTarget 잠시 제거
@@ -57,8 +57,11 @@ public class RagService {
         String answer = response.getBody().getAnswer();
 
         // DB에 저장
-        User user = userRepository.findByUid(userUid).orElseThrow();
-        Location location = locationRepository.findById(locationSeq).orElseThrow();
+        User user = userService.getUserByUid(userUid)
+                .orElseThrow(() -> new IllegalArgumentException("❗ 사용자가 존재하지 않습니다: " + userUid));
+
+        Location location = locationRepository.findById(locationSeq)
+                .orElseThrow(() -> new IllegalArgumentException("❗ 장소가 존재하지 않습니다: " + locationSeq));
 
         Chat chat = Chat.builder()
                 .user(user)
