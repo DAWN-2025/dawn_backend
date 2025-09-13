@@ -43,7 +43,7 @@ def load_doc_from_gcs(bucket: str, blob: str):
     os.remove(path)                                  # 임시 파일 정리
     return docs
 
-# 2) HTTPS URL(OneDrive·Dropbox·프리사인 URL)에서 바로 받기
+# 2) HTTPS URL(OneDrive·Dropbox·프리사인 URL)에서 바로 받기
 def load_doc_from_url(url: str):
     resp = requests.get(url, timeout=15)
     resp.raise_for_status()
