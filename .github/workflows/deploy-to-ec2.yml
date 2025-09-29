@@ -1,0 +1,95 @@
+name: Deploy To EC2 With Docker
+
+on:
+  push:
+    branches: [feature/deploy-docker]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ap-northeast-2
+      BACKEND_REPO: dawn-backend
+      RAG_REPO: dawn-rag-api
+      REMOTE_DIR: /home/ec2-user/dawn-server
+      ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK for Spring
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Build Spring (Gradle)
+        run: |
+          cd dawn-backend
+          ./gradlew clean build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build & Push Backend Docker image
+        run: |
+          docker build -t $BACKEND_REPO ./dawn-backend
+          docker tag $BACKEND_REPO:latest ${{ steps.login-ecr.outputs.registry }}/$BACKEND_REPO:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/$BACKEND_REPO:latest
+
+      - name: Build & Push RAG Docker image
+        run: |
+          docker build -t $RAG_REPO ./dawn-AI
+          docker tag $RAG_REPO:latest ${{ steps.login-ecr.outputs.registry }}/$RAG_REPO:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/$RAG_REPO:latest
+
+      - name: Write .env for rag-api
+        run: echo "${{ secrets.RAG_ENV_FILE }}" > dawn-AI/.env
+
+      - name: Write firebase-admin.json
+        run: echo "${{ secrets.FIREBASE_ADMIN_JSON }}" > dawn-backend/src/main/resources/firebase-admin.json
+
+      - name: Write GCP credential json
+        run: echo "${{ secrets.GCP_CREDENTIAL_JSON }}" > dawn-AI/dawn-a6a20-c9d639db0137.json
+
+      - name: Upload docker-compose.yml & env files to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: |
+            docker-compose.yml
+            dawn-backend/.env
+            dawn-AI/.env
+          target: ${{ env.REMOTE_DIR }}/current
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd ${{ env.REMOTE_DIR }}/current
+
+            export DOCKER_CONFIG=/tmp/docker-ecr-config
+            mkdir -p $DOCKER_CONFIG
+            echo '{"credHelpers":{"${{ steps.login-ecr.outputs.registry }}":"ecr-login"}}' > $DOCKER_CONFIG/config.json
+
+            docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.BACKEND_REPO }}:latest
+            docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest
+
+            docker compose down || true
+            docker compose up -d --remove-orphans
+            docker compose ps
