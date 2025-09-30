@@ -12,7 +12,7 @@ jobs:
       AWS_REGION: ap-northeast-2
       BACKEND_REPO: dawn-backend
       RAG_REPO: dawn-rag-api
-      REMOTE_DIR: /home/ec2-user/dawn-server
+      REMOTE_DIR: /home/ubuntu/dawn-server
 
     steps:
       - name: Checkout
@@ -90,7 +90,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            mkdir -p /home/ec2-user/dawn-server/current
+            mkdir -p /home/ubuntu/dawn-server/current
 
       - name: Upload docker-compose.yml & env files to EC2
         uses: appleboy/scp-action@v0.1.7
