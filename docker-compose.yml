@@ -20,7 +20,7 @@ services:
       retries: 5
 
   spring-boot-app:
-    image: dawn-backend:latest
+    image: 351933853369.dkr.ecr.ap-northeast-2.amazonaws.com/dawn-backend:latest
     container_name: dawn-backend
     ports:
       - "8080:8080"
@@ -41,7 +41,7 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
 
   rag-api:
-    image: dawn-rag-api:latest
+    image: 351933853369.dkr.ecr.ap-northeast-2.amazonaws.com/dawn-rag-api:latest
     container_name: dawn-rag-api
     ports:
       - "8000:8000"
