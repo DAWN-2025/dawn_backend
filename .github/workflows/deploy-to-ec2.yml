@@ -41,7 +41,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Write .env for rag-api
-        run: echo "${{ secrets.RAG_ENV_FILE }}" > dawn-AI/.env
+        working-directory: ./dawn-AI
+        run: echo "${{ secrets.RAG_ENV_FILE }}" > .env
 
       - name: Write GCP credential json
         run: echo "${{ secrets.GCP_CREDENTIAL_JSON }}" > dawn-AI/dawn-a6a20-c9d639db0137.json
@@ -74,22 +75,20 @@ jobs:
           echo "Files in dawn-AI:"
           ls -al dawn-AI
 
-      - name: Print RAG_ENV_FILE secret (for debug only - remove later)
+      - name: Check .env path (Debug)
         run: |
-          echo "RAG_ENV_FILE=${{ secrets.RAG_ENV_FILE }}"
-
-      - name: Check .env contents
-        run: |
-          echo "==== .env ===="
-          cat dawn-AI/.env
-
+          echo "Listing files in current and dawn-AI directory"
+          pwd
+          ls -al
+          ls -al dawn-AI
+          find . -name ".env"
       - name: Upload docker-compose.yml & env files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: ./docker-compose.yml,./dawn-AI/.env
+          source: dawn-AI/.env,docker-compose.yml
           target: ${{ env.REMOTE_DIR }}/current
 
       - name: Deploy on EC2
