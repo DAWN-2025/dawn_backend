@@ -80,9 +80,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: |
-            ./docker-compose.yml
-            ./dawn-AI/.env
+          source: docker-compose.yml,dawn-AI/.env
           target: ${{ env.REMOTE_DIR }}/current
 
       - name: Deploy on EC2
