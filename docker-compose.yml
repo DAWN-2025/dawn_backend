@@ -20,7 +20,7 @@ services:
       retries: 5
 
   spring-boot-app:
-    image: ${ECR_REGISTRY}/dawn-backend:latest
+    image: dawn-backend:latest
     container_name: dawn-backend
     ports:
       - "8080:8080"
@@ -29,29 +29,24 @@ services:
         condition: service_healthy
     environment:
       RAG_API_URL: http://rag-api:8000
-      LETTER_API_URL : http://rag-api:8000/generate-letter
-      ECR_REGISTRY: ${ECR_REGISTRY}
+      LETTER_API_URL: http://rag-api:8000/generate-letter
 
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${DB_NAME}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
 
-      # JPA 옵션(원하는 경우)
       SPRING_JPA_HIBERNATE_DDL_AUTO: create
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
 
-
   rag-api:
-    image: ${ECR_REGISTRY}/dawn-rag-api:latest
+    image: dawn-rag-api:latest
     container_name: dawn-rag-api
     ports:
       - "8000:8000"
     env_file:
       - ./dawn-AI/.env
-    environment:
-      ECR_REGISTRY: ${ECR_REGISTRY}
 
 volumes:
   dawn-mysql-data:

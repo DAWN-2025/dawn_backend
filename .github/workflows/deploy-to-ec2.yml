@@ -13,7 +13,6 @@ jobs:
       BACKEND_REPO: dawn-backend
       RAG_REPO: dawn-rag-api
       REMOTE_DIR: /home/ec2-user/dawn-server
-      ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
 
     steps:
       - name: Checkout
@@ -43,15 +42,15 @@ jobs:
 
       - name: Build & Push Backend Docker image
         run: |
-          docker build -t $BACKEND_REPO ./dawn-backend
-          docker tag $BACKEND_REPO:latest ${{ steps.login-ecr.outputs.registry }}/$BACKEND_REPO:latest
-          docker push ${{ steps.login-ecr.outputs.registry }}/$BACKEND_REPO:latest
+          docker build -t ${{ env.BACKEND_REPO }} ./dawn-backend
+          docker tag ${{ env.BACKEND_REPO }}:latest ${{ steps.login-ecr.outputs.registry }}/${{ env.BACKEND_REPO }}:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.BACKEND_REPO }}:latest
 
       - name: Build & Push RAG Docker image
         run: |
-          docker build -t $RAG_REPO ./dawn-AI
-          docker tag $RAG_REPO:latest ${{ steps.login-ecr.outputs.registry }}/$RAG_REPO:latest
-          docker push ${{ steps.login-ecr.outputs.registry }}/$RAG_REPO:latest
+          docker build -t ${{ env.RAG_REPO }} ./dawn-AI
+          docker tag ${{ env.RAG_REPO }}:latest ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest
 
       - name: Write .env for rag-api
         run: echo "${{ secrets.RAG_ENV_FILE }}" > dawn-AI/.env
@@ -70,7 +69,6 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: |
             docker-compose.yml
-            dawn-backend/.env
             dawn-AI/.env
           target: ${{ env.REMOTE_DIR }}/current
 
