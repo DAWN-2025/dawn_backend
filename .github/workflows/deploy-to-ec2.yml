@@ -47,29 +47,29 @@ jobs:
       - name: Write GCP credential json
         run: echo "${{ secrets.GCP_CREDENTIAL_JSON }}" > dawn-AI/dawn-a6a20-c9d639db0137.json
 
-      - name: Build & Push RAG Docker image (No Cache Test)
-        run: |
-          docker buildx create --use || true
-
-          docker buildx build \
-            --no-cache \                     # ✅ 캐시 무시
-            --progress=plain \              # ✅ 디버깅용 로그
-            --platform linux/amd64 \
-            -t ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest \
-            --push \
-            ./dawn-AI
-
-#      - name: Build & Push RAG Docker image (with BuildKit Cache)
+#      - name: Build & Push RAG Docker image (No Cache Test)
 #        run: |
 #          docker buildx create --use || true
 #
 #          docker buildx build \
+#            --no-cache \                     # ✅ 캐시 무시
+#            --progress=plain \              # ✅ 디버깅용 로그
 #            --platform linux/amd64 \
-#            --cache-from=type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:cache \
-#            --cache-to=type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:cache,mode=max \
 #            -t ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest \
 #            --push \
 #            ./dawn-AI
+
+      - name: Build & Push RAG Docker image (with BuildKit Cache)
+        run: |
+          docker buildx create --use || true
+
+          docker buildx build \
+            --platform linux/amd64 \
+            --cache-from=type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:cache \
+            --cache-to=type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:cache,mode=max \
+            -t ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest \
+            --push \
+            ./dawn-AI
 
       - name: Write firebase-admin.json
         run: echo "${{ secrets.FIREBASE_ADMIN_JSON }}" > dawn-backend/src/main/resources/firebase-admin.json
