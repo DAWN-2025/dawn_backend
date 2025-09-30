@@ -110,9 +110,9 @@ jobs:
           script: |
             cd ${{ env.REMOTE_DIR }}/current
 
-            export DOCKER_CONFIG=/tmp/docker-ecr-config
-            mkdir -p $DOCKER_CONFIG
-            echo '{"credHelpers":{"${{ steps.login-ecr.outputs.registry }}":"ecr-login"}}' > $DOCKER_CONFIG/config.json
+            # ✅ ECR 로그인
+            aws ecr get-login-password --region ${{ env.AWS_REGION }} \
+              | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
 
             docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.BACKEND_REPO }}:latest
             docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest
