@@ -1,31 +1,32 @@
-# Python bytecode
+# 안전하게 변경
+# ❌ 전체 json 무시하지 말고 특정 경로만 무시하자
+
 __pycache__/
 *.pyc
 *.pyo
 
-# 환경 변수
 .env
 .env.*
 
-# IDE 설정
 .vscode/
 .idea/
 *.iml
 
-# Git
 .git/
 .gitignore
 
-# 문서 및 테스트
-*.docx
+*.log
+*.db
+
+# 예: 테스트, 문서
 tests/
 docs/
 
-# 로컬 데이터 or 민감 파일
-*.json
-*.db
-*.log
-
-# OS/Tool-specific
+# OS
 .DS_Store
 Thumbs.db
+
+# ❗ JSON 민감 파일이 있을 경우, 명확히 경로로 제한
+# ❌ *.json → ⚠️ 너무 과함
+# 예: 특정 경로만 제외하고 싶다면
+# secrets/*.json
