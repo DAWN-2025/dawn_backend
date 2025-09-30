@@ -74,6 +74,10 @@ jobs:
           echo "Files in dawn-AI:"
           ls -al dawn-AI
 
+      - name: Print RAG_ENV_FILE secret (for debug only - remove later)
+        run: |
+          echo "RAG_ENV_FILE=${{ secrets.RAG_ENV_FILE }}"
+
       - name: Upload docker-compose.yml & env files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
