@@ -2,10 +2,11 @@ FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 
+# 앱 JAR 파일 복사
 COPY build/libs/*.jar app.jar
 
-COPY src/main/resources/dawn-a6a20-firebase-adminsdk-fbsvc-387b42759f.json ./dawn-firebase.json
-
+# Firebase admin JSON 복사 (파일명과 경로 수정됨)
+COPY src/main/resources/firebase-admin.json ./firebase-admin.json
 
 EXPOSE 8080
 
