@@ -46,11 +46,17 @@ jobs:
       - name: Write GCP credential json
         run: echo "${{ secrets.GCP_CREDENTIAL_JSON }}" > dawn-AI/dawn-a6a20-c9d639db0137.json
 
-      - name: Build & Push RAG Docker image
+      - name: Build & Push RAG Docker image (with BuildKit Cache)
         run: |
-          docker build -t ${{ env.RAG_REPO }} ./dawn-AI
-          docker tag ${{ env.RAG_REPO }}:latest ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest
-          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest
+          docker buildx create --use || true
+          
+          docker buildx build \
+            --platform linux/amd64 \
+            --cache-from=type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:cache \
+            --cache-to=type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:cache,mode=max \
+            -t ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest \
+            --push \
+            ./dawn-AI
 
       - name: Write firebase-admin.json
         run: echo "${{ secrets.FIREBASE_ADMIN_JSON }}" > dawn-backend/src/main/resources/firebase-admin.json
@@ -61,6 +67,13 @@ jobs:
           docker tag ${{ env.BACKEND_REPO }}:latest ${{ steps.login-ecr.outputs.registry }}/${{ env.BACKEND_REPO }}:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.BACKEND_REPO }}:latest
 
+      - name: Debug file existence
+        run: |
+          echo "Files in root:"
+          ls -al
+          echo "Files in dawn-AI:"
+          ls -al dawn-AI
+
       - name: Upload docker-compose.yml & env files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -68,8 +81,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: |
-            docker-compose.yml
-            dawn-AI/.env
+            ./docker-compose.yml
+            ./dawn-AI/.env
           target: ${{ env.REMOTE_DIR }}/current
 
       - name: Deploy on EC2
