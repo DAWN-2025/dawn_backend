@@ -78,13 +78,18 @@ jobs:
         run: |
           echo "RAG_ENV_FILE=${{ secrets.RAG_ENV_FILE }}"
 
+      - name: Check .env contents
+        run: |
+          echo "==== .env ===="
+          cat dawn-AI/.env
+
       - name: Upload docker-compose.yml & env files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: docker-compose.yml,dawn-AI/.env
+          source: ./docker-compose.yml,./dawn-AI/.env
           target: ${{ env.REMOTE_DIR }}/current
 
       - name: Deploy on EC2
