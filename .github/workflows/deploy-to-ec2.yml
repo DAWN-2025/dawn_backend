@@ -82,6 +82,16 @@ jobs:
           ls -al
           ls -al dawn-AI
           find . -name ".env"
+
+      - name: Create remote directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            mkdir -p /home/ec2-user/dawn-server/current
+
       - name: Upload docker-compose.yml & env files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
