@@ -1,32 +1,18 @@
-# 안전하게 변경
-# ❌ 전체 json 무시하지 말고 특정 경로만 무시하자
+# Git
+.git
+.gitignore
 
+# IDE
+.idea
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.Python
+env/
+venv/
 
-.env
-.env.*
-
-.vscode/
-.idea/
-*.iml
-
-.git/
-.gitignore
-
-*.log
-*.db
-
-# 예: 테스트, 문서
-tests/
-docs/
-
-# OS
+# macOS
 .DS_Store
-Thumbs.db
-
-# ❗ JSON 민감 파일이 있을 경우, 명확히 경로로 제한
-# ❌ *.json → ⚠️ 너무 과함
-# 예: 특정 경로만 제외하고 싶다면
-# secrets/*.json
