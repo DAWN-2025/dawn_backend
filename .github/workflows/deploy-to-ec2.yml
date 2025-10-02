@@ -24,6 +24,10 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - name: Write firebase-admin.json
+        run: echo "${{ secrets.FIREBASE_ADMIN_JSON }}" > dawn-backend/src/main/resources/firebase-admin.json
+
+
       - name: Build Spring (Gradle)
         run: |
           cd dawn-backend
@@ -50,7 +54,8 @@ jobs:
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
 
       - name: Write GCP credential json
-        run: echo "${{ secrets.GCP_CREDENTIAL_JSON }}" > dawn-AI/dawn-a6a20-c9d639db0137.json
+        run: |
+          printf '%s' "${{ secrets.GCP_CREDENTIAL_JSON }}" > dawn-AI/dawn-a6a20-c9d639db0137.json
 
       - name: Build & Push RAG Docker image (with BuildKit Cache)
         run: |
@@ -63,9 +68,6 @@ jobs:
             -t ${{ steps.login-ecr.outputs.registry }}/${{ env.RAG_REPO }}:latest \
             --push \
             ./dawn-AI
-
-      - name: Write firebase-admin.json
-        run: echo "${{ secrets.FIREBASE_ADMIN_JSON }}" > dawn-backend/src/main/resources/firebase-admin.json
 
       - name: Build & Push Backend Docker image
         run: |

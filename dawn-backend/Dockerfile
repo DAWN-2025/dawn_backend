@@ -6,7 +6,7 @@ WORKDIR /app
 COPY build/libs/*.jar app.jar
 
 # Firebase admin JSON 복사 (파일명과 경로 수정됨)
-COPY src/main/resources/firebase-admin.json ./firebase-admin.json
+COPY src/main/resources/firebase-admin.json /app/dawn-firebase.json
 
 EXPOSE 8080
 
