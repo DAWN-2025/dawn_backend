@@ -27,7 +27,12 @@ jobs:
       # ✅ Firebase credential 복원 (Base64 → JSON)
       - name: Write firebase-admin.json
         run: |
-          echo "${{ secrets.FIREBASE_ADMIN_JSON_B64 }}" | base64 -d > dawn-backend/src/main/resources/firebase-admin.json
+          echo "${{ secrets.FIREBASE_ADMIN_JSON }}" | base64 -d > dawn-backend/src/main/resources/firebase-admin.json
+
+      - name: Debug file existence
+        run: |
+          echo "--- firebase-admin.json preview ---"
+          head -5 dawn-backend/src/main/resources/firebase-admin.json || true
 
       - name: Build Spring (Gradle)
         run: |
@@ -57,7 +62,7 @@ jobs:
       # ✅ GCP credential 복원 (Base64 → JSON)
       - name: Write GCP credential json
         run: |
-          echo "${{ secrets.GCP_CREDENTIAL_JSON_B64 }}" | base64 -d > dawn-AI/dawn-a6a20-c9d639db0137.json
+          echo "${{ secrets.GCP_CREDENTIAL_JSON }}" | base64 -d > dawn-AI/dawn-a6a20-c9d639db0137.json
 
       - name: Build & Push RAG Docker image (with BuildKit Cache)
         run: |
