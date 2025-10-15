@@ -13,6 +13,9 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+COPY dawn-a6a20-c9d639db0137.json /app/gcp-key.json
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/gcp-key.json"
+
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
