@@ -78,7 +78,7 @@ public class DataInitializer implements CommandLineRunner {
                 .phoneNum("062-225-0245")
                 .exhibitionTime("11:00, 13:00, 14:30, 16:00, 17:30")
                 .available("Stroller, Wheelchair")
-                .translate("한국어 / 영어 / 중국어")
+                .translate("Korean / English / Chinese")
                 .nameEng("Jeonil Building 245")
                 .addressEng("245, Geumnam-ro, Dong-gu, Gwangju-si, South Korea")
                 .build());
